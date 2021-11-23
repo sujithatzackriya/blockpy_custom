@@ -1,0 +1,137 @@
+Version 2.3.8
+-------------
+* Bug fix for metadata of threaded Sandboxed function calls
+* Bug fix for Standard environment's execution
+
+Version 2.3.7
+-------------
+* Fixed bug with Full Feedback Resolver not sorting feedback by priority
+* GradeScope resolver now allows custom messages (pre-alpha)
+* GradeScope resolver now supports leaderboard
+
+Version 2.3.6
+-------------
+* GradeScope environment has hidden unit tests
+* unit_test can now take in an assertion function
+* Suppressed TIFA warning message for unknown modules
+* Fixed bug with error messages not rendering correctly in runtime errors
+
+Version 2.3.5
+-------------
+* Pedal now supports loading IPYNB files directly
+* NBGrader Environment can filter IPYNB cells
+* Sandbox's open function will now respect Submission files better
+* Online tests will now respect requirements_dev.txt
+* GradeScope environment now outputs all Used feedback
+* Fixed assert_group label in unit_test
+* Bug fix for CAIT in classes
+
+Version 2.3.4
+-------------
+* New environment: NBGrader (prototype)
+* New hook for adding feedback to reports
+* New Pedal logo (not yet integrated)
+* New silent resolver
+* New tracing mode for Sandbox that can track functions
+* Remove dependency on Coverage module
+
+Version 2.3.3
+-------------
+* Fixes for Sandbox's block/allow function mocking
+* Fixing up GradeScope environment
+* Feedback's field serialization can now be overridden
+
+Version 2.3.2
+-------------
+* Add missing __index__ method to SandboxResult
+* Fix SandboxResult's __int__ to return an integer
+
+Version 2.3.1
+-------------
+* Fixed up the `log` command to work more like `print`
+* Make VPL environment output System commands
+* Fixed VPL environment's formatting
+
+Version 2.3.0
+-------------
+* Added ProgSnap SQL-format support to command line
+* Added shortcut for --create_output (-m)
+* Fixed bug with normalizing string literal type annotations
+* Fixed set literal support for Tifa/type normalizer
+* Added support for `run` command line mode
+* Fixed support for `sandbox` command line mode
+* Fix default Formatter to be command-line friendly (no HTML output)
+* Make Standard environment the default for the command line.
+
+Version 2.2.1
+-------------
+* Added find_asts(node) to replace parse_program().find_all(node)
+* Separated built documentation into a distinct branch
+* Minor fixes for python 3.6 and 3.9 compatibility
+* Updated documentation for latest version
+* Fixed bug in ensure_correct_plot (failed for even correct plot)
+* Now support ^ operator for XORing feedbacks
+* Introduced new find_asts
+* New environment, GradeScope
+
+Version 2.2.0
+-------------
+* New scoring API, allowing string scores
+* Allow "else_message" on feedback functions.
+* Debug CLI gives more context
+* ensure_function now allows compliment parameter
+* Resolvers can now analyze ignored feedback
+* The unit_test function now supports more features
+* New environment, VPL
+
+Version 2.1.1
+-------------
+* Fix TIFA issue with secondary branches
+
+Version 2.1.0
+-------------
+* Published on 9/27/2020
+* CLI interface improved
+* More tests
+
+Version 2.0.2
+-------------
+* Minor bug fixes in TIFA, and some other tools
+* Added `printed` method for Sandbox
+
+Version 2.0.1
+-------------
+
+* Added in `pedal.quick` to allow easy mass importing of all "core" modules.
+
+Version 2.0.0
+-------------
+
+Massive rewrite to internals, formalizing certain system components and adding more metadata across the board.
+
+Version 1.0.0
+-------------
+
+Operator's names can now be accessed with "op_name" instead of "op".
+
+Nodes no longer have a .data_type field; instead you must use the data_type helper function
+    
+    from pedal.cait.cait_api import data_type
+    names = ast.find_all("Name")
+    data_type(names[0]).is_equal("StrType")
+
+Various instructor_* libraries have been moved into pedal.toolkits and pedal.mistakes
+    from instructor_printing -> from pedal.toolkit.printing import *
+    from instructor_utility -> from pedal.toolkit.utilities import *
+
+from pedal.toolkit.printing import *
+from pedal.toolkit.utilities import *
+from pedal.toolkit.functions import *
+
+Still to fix:
+#20??: Needs to point the exampe out to the correct place
+#22.5: Need to fix output_test in toolkit.functions
+#25.3: Needs to point the example out to the correct place
+#25.4: WE
+#33.3: WE
+#39.4: WE
