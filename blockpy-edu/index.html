@@ -1,0 +1,2164 @@
+<html lang="en" class="js-focus-visible" data-js-focus-visible=""><head><style id="blockly-renderer-style-geras-classic">.geras-renderer.classic-theme .blocklyText, 
+    .geras-renderer.classic-theme .blocklyFlyoutLabelText {
+    font-family: sans-serif;
+    font-size: 11pt;
+    font-weight: normal;
+    }
+    .geras-renderer.classic-theme .blocklyText {
+    fill: #fff;
+    }
+    .geras-renderer.classic-theme .blocklyNonEditableText>rect,
+    .geras-renderer.classic-theme .blocklyEditableText>rect {
+    fill: #fff;
+    fill-opacity: .6;
+    stroke: none;
+    }
+    .geras-renderer.classic-theme .blocklyNonEditableText>text,
+    .geras-renderer.classic-theme .blocklyEditableText>text {
+    fill: #000;
+    }
+    .geras-renderer.classic-theme .blocklyFlyoutLabelText {
+    fill: #000;
+    }
+    .geras-renderer.classic-theme .blocklyText.blocklyBubbleText {
+    fill: #000;
+    }
+    .geras-renderer.classic-theme .blocklyEditableText:not(.editing):hover>rect {
+    stroke: #fff;
+    stroke-width: 2;
+    }
+    .geras-renderer.classic-theme .blocklyHtmlInput {
+    font-family: sans-serif;
+    font-weight: normal;
+    }
+    .geras-renderer.classic-theme .blocklySelected>.blocklyPath {
+    stroke: #fc3;
+    stroke-width: 3px;
+    }
+    .geras-renderer.classic-theme .blocklyHighlightedConnectionPath {
+    stroke: #fc3;
+    }
+    .geras-renderer.classic-theme .blocklyReplaceable .blocklyPath {
+    fill-opacity: .5;
+    }
+    .geras-renderer.classic-theme .blocklyReplaceable .blocklyPathLight,
+    .geras-renderer.classic-theme .blocklyReplaceable .blocklyPathDark {
+    display: none;
+    }
+    .geras-renderer.classic-theme .blocklyInsertionMarker>.blocklyPath {
+    fill-opacity: 0.2;
+    stroke: none
+    }
+    .geras-renderer.classic-theme .blocklyInsertionMarker>.blocklyPathLight,
+    .geras-renderer.classic-theme .blocklyInsertionMarker>.blocklyPathDark {
+    fill-opacity: 0.2;
+    stroke: none
+    }</style><style id="blockly-common-style">.blocklySvg {
+    background-color: #fff;
+    outline: none;
+    overflow: hidden;
+    position: absolute;
+    display: block;
+    }
+    .blocklyWidgetDiv {
+    display: none;
+    position: absolute;
+    z-index: 99999;
+    }
+    .injectionDiv {
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    touch-action: none;
+    }
+    .blocklyNonSelectable {
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    }
+    .blocklyWsDragSurface {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+    .blocklyWsDragSurface.blocklyOverflowVisible {
+    overflow: visible;
+    }
+    .blocklyBlockDragSurface {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: visible !important;
+    z-index: 50;
+    }
+    .blocklyBlockCanvas.blocklyCanvasTransitioning,
+    .blocklyBubbleCanvas.blocklyCanvasTransitioning {
+    transition: transform .5s;
+    }
+    .blocklyTooltipDiv {
+    background-color: #ffffc7;
+    border: 1px solid #ddc;
+    box-shadow: 4px 4px 20px 1px rgba(0,0,0,.15);
+    color: #000;
+    display: none;
+    font-family: sans-serif;
+    font-size: 9pt;
+    opacity: .9;
+    padding: 2px;
+    position: absolute;
+    z-index: 100000;
+    }
+    .blocklyDropDownDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    display: none;
+    border: 1px solid;
+    border-color: #dadce0;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 4px;
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,.3);
+    }
+    .blocklyDropDownDiv.focused {
+    box-shadow: 0px 0px 6px 1px rgba(0,0,0,.3);
+    }
+    .blocklyDropDownContent {
+    max-height: 300px;
+    overflow: auto;
+    overflow-x: hidden;
+    }
+    .blocklyDropDownArrow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    z-index: -1;
+    background-color: inherit;
+    border-color: inherit;
+    }
+    .blocklyDropDownButton {
+    display: inline-block;
+    float: left;
+    padding: 0;
+    margin: 4px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid;
+    transition: box-shadow .1s;
+    cursor: pointer;
+    }
+    .blocklyArrowTop {
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-top-left-radius: 4px;
+    border-color: inherit;
+    }
+    .blocklyArrowBottom {
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-bottom-right-radius: 4px;
+    border-color: inherit;
+    }
+    .blocklyResizeSE {
+    cursor: se-resize;
+    fill: #aaa;
+    }
+    .blocklyResizeSW {
+    cursor: sw-resize;
+    fill: #aaa;
+    }
+    .blocklyResizeLine {
+    stroke: #515A5A;
+    stroke-width: 1;
+    }
+    .blocklyHighlightedConnectionPath {
+    fill: none;
+    stroke: #fc3;
+    stroke-width: 4px;
+    }
+    .blocklyPathLight {
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: 1;
+    }
+    .blocklySelected>.blocklyPathLight {
+    display: none;
+    }
+    .blocklyDraggable {
+    cursor: url("/blockpy/static/blockly/media/handopen.cur"), auto;
+    cursor: grab;
+    cursor: -webkit-grab;
+    }
+    .blocklyDragging {
+    cursor: url("/blockpy/static/blockly/media/handclosed.cur"), auto;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    }
+    .blocklyDraggable:active {
+    cursor: url("/blockpy/static/blockly/media/handclosed.cur"), auto;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    }
+    .blocklyBlockDragSurface .blocklyDraggable {
+    cursor: url("/blockpy/static/blockly/media/handclosed.cur"), auto;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    }
+    .blocklyDragging.blocklyDraggingDelete {
+    cursor: url("/blockpy/static/blockly/media/handdelete.cur"), auto;
+    }
+    .blocklyDragging>.blocklyPath,
+    .blocklyDragging>.blocklyPathLight {
+    fill-opacity: .8;
+    stroke-opacity: .8;
+    }
+    .blocklyDragging>.blocklyPathDark {
+    display: none;
+    }
+    .blocklyDisabled>.blocklyPath {
+    fill-opacity: .5;
+    stroke-opacity: .5;
+    }
+    .blocklyDisabled>.blocklyPathLight,
+    .blocklyDisabled>.blocklyPathDark {
+    display: none;
+    }
+    .blocklyInsertionMarker>.blocklyPath,
+    .blocklyInsertionMarker>.blocklyPathLight,
+    .blocklyInsertionMarker>.blocklyPathDark {
+    fill-opacity: .2;
+    stroke: none
+    }
+    .blocklyMultilineText {
+    font-family: monospace;
+    }
+    .blocklyNonEditableText>text {
+    pointer-events: none;
+    }
+    .blocklyFlyout {
+    position: absolute;
+    z-index: 20;
+    }
+    .blocklyText text {
+    cursor: default;
+    }
+    .blocklySvg text, .blocklyBlockDragSurface text {
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    cursor: inherit;
+    }
+    .blocklyHidden {
+    display: none;
+    }
+    .blocklyFieldDropdown:not(.blocklyHidden) {
+    display: block;
+    }
+    .blocklyIconGroup {
+    cursor: default;
+    }
+    .blocklyIconGroup:not(:hover),
+    .blocklyIconGroupReadonly {
+    opacity: .6;
+    }
+    .blocklyIconShape {
+    fill: #00f;
+    stroke: #fff;
+    stroke-width: 1px;
+    }
+    .blocklyIconSymbol {
+    fill: #fff;
+    }
+    .blocklyMinimalBody {
+    margin: 0;
+    padding: 0;
+    }
+    .blocklyHtmlInput {
+    border: none;
+    border-radius: 4px;
+    height: 100%;
+    margin: 0;
+    outline: none;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+    box-sizing: border-box;
+    }
+    .blocklyHtmlInput::-ms-clear {
+    display: none;
+    }
+    .blocklyMainBackground {
+    stroke-width: 1;
+    stroke: #c6c6c6;
+    }
+    .blocklyMutatorBackground {
+    fill: #fff;
+    stroke: #ddd;
+    stroke-width: 1;
+    }
+    .blocklyFlyoutBackground {
+    fill: #ddd;
+    fill-opacity: .8;
+    }
+    .blocklyMainWorkspaceScrollbar {
+    z-index: 20;
+    }
+    .blocklyFlyoutScrollbar {
+    z-index: 30;
+    }
+    .blocklyScrollbarHorizontal, .blocklyScrollbarVertical {
+    position: absolute;
+    outline: none;
+    }
+    .blocklyScrollbarBackground {
+    opacity: 0;
+    }
+    .blocklyScrollbarHandle {
+    fill: #ccc;
+    }
+    .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle,
+    .blocklyScrollbarHandle:hover {
+    fill: #bbb;
+    }
+    .blocklyFlyout .blocklyScrollbarHandle {
+    fill: #bbb;
+    }
+    .blocklyFlyout .blocklyScrollbarBackground:hover+.blocklyScrollbarHandle,
+    .blocklyFlyout .blocklyScrollbarHandle:hover {
+    fill: #aaa;
+    }
+    .blocklyInvalidInput {
+    background: #faa;
+    }
+    .blocklyContextMenu {
+    border-radius: 4px;
+    max-height: 100%;
+    }
+    .blocklyDropdownMenu {
+    border-radius: 2px;
+    padding: 0 !important;
+    }
+    .blocklyWidgetDiv .blocklyDropdownMenu .goog-menuitem,
+    .blocklyDropDownDiv .blocklyDropdownMenu .goog-menuitem {
+    padding-left: 28px;
+    }
+    .blocklyWidgetDiv .blocklyDropdownMenu .goog-menuitem.goog-menuitem-rtl,
+    .blocklyDropDownDiv .blocklyDropdownMenu .goog-menuitem.goog-menuitem-rtl {
+    padding-left: 5px;
+    padding-right: 28px;
+    }
+    .blocklyVerticalMarker {
+    stroke-width: 3px;
+    fill: rgba(255,255,255,.5);
+    pointer-events: none
+    }
+    .blocklyWidgetDiv .goog-option-selected .goog-menuitem-checkbox,
+    .blocklyWidgetDiv .goog-option-selected .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-option-selected .goog-menuitem-checkbox,
+    .blocklyDropDownDiv .goog-option-selected .goog-menuitem-icon {
+    background: url(/blockpy/static/blockly/media/sprites.png) no-repeat -48px -16px;
+    }
+    .blocklyWidgetDiv .goog-menu {
+    background: #fff;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px;
+    cursor: default;
+    font: normal 13px Arial, sans-serif;
+    margin: 0;
+    outline: none;
+    padding: 4px 0;
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%;
+    z-index: 20000;
+    box-shadow: 0px 0px 3px 1px rgba(0,0,0,.3);
+    }
+    .blocklyWidgetDiv .goog-menu.focused {
+    box-shadow: 0px 0px 6px 1px rgba(0,0,0,.3);
+    }
+    .blocklyDropDownDiv .goog-menu {
+    cursor: default;
+    font: normal 13px "Helvetica Neue", Helvetica, sans-serif;
+    outline: none;
+    z-index: 20000;
+    }
+    .blocklyWidgetDiv .goog-menuitem,
+    .blocklyDropDownDiv .goog-menuitem {
+    color: #000;
+    font: normal 13px Arial, sans-serif;
+    list-style: none;
+    margin: 0;
+    min-width: 7em;
+    border: none;
+    padding: 6px 15px;
+    white-space: nowrap;
+    cursor: pointer;
+    }
+    .blocklyWidgetDiv .goog-menu-nocheckbox .goog-menuitem,
+    .blocklyWidgetDiv .goog-menu-noicon .goog-menuitem,
+    .blocklyDropDownDiv .goog-menu-nocheckbox .goog-menuitem,
+    .blocklyDropDownDiv .goog-menu-noicon .goog-menuitem {
+    padding-left: 12px;
+    }
+    .blocklyWidgetDiv .goog-menuitem-content,
+    .blocklyDropDownDiv .goog-menuitem-content {
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    }
+    .blocklyWidgetDiv .goog-menuitem-content {
+    color: #000;
+    }
+    .blocklyDropDownDiv .goog-menuitem-content {
+    color: #000;
+    }
+    .blocklyWidgetDiv .goog-menuitem-disabled,
+    .blocklyDropDownDiv .goog-menuitem-disabled {
+    cursor: inherit;
+    }
+    .blocklyWidgetDiv .goog-menuitem-disabled .goog-menuitem-content,
+    .blocklyDropDownDiv .goog-menuitem-disabled .goog-menuitem-content {
+    color: #ccc !important;
+    }
+    .blocklyWidgetDiv .goog-menuitem-disabled .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-menuitem-disabled .goog-menuitem-icon {
+    opacity: .3;
+    filter: alpha(opacity=30);
+    }
+    .blocklyWidgetDiv .goog-menuitem-highlight ,
+    .blocklyDropDownDiv .goog-menuitem-highlight {
+    background-color: rgba(0,0,0,.1);
+    }
+    .blocklyWidgetDiv .goog-menuitem-checkbox,
+    .blocklyWidgetDiv .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-menuitem-checkbox,
+    .blocklyDropDownDiv .goog-menuitem-icon {
+    background-repeat: no-repeat;
+    height: 16px;
+    left: 6px;
+    position: absolute;
+    right: auto;
+    vertical-align: middle;
+    width: 16px;
+    }
+    .blocklyWidgetDiv .goog-menuitem-rtl .goog-menuitem-checkbox,
+    .blocklyWidgetDiv .goog-menuitem-rtl .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-menuitem-rtl .goog-menuitem-checkbox,
+    .blocklyDropDownDiv .goog-menuitem-rtl .goog-menuitem-icon {
+    left: auto;
+    right: 6px;
+    }
+    .blocklyWidgetDiv .goog-option-selected .goog-menuitem-checkbox,
+    .blocklyWidgetDiv .goog-option-selected .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-option-selected .goog-menuitem-checkbox,
+    .blocklyDropDownDiv .goog-option-selected .goog-menuitem-icon {
+    position: static;
+    float: left;
+    margin-left: -24px;
+    }
+    .blocklyWidgetDiv .goog-menuitem-rtl .goog-menuitem-checkbox,
+    .blocklyWidgetDiv .goog-menuitem-rtl .goog-menuitem-icon,
+    .blocklyDropDownDiv .goog-menuitem-rtl .goog-menuitem-checkbox,
+    .blocklyDropDownDiv .goog-menuitem-rtl .goog-menuitem-icon {
+    float: right;
+    margin-right: -24px;
+    }
+    .blocklyComputeCanvas {
+    position: absolute;
+    width: 0;
+    height: 0;
+    }
+    .blocklyNoPointerEvents {
+    pointer-events: none;
+    }
+    .blocklyCommentTextarea {
+    background-color: #fef49c;
+    border: 0;
+    outline: 0;
+    margin: 0;
+    padding: 3px;
+    resize: none;
+    display: block;
+    overflow: hidden;
+    }
+    .blocklyFlyoutButton {
+    fill: #888;
+    cursor: default;
+    }
+    .blocklyFlyoutButtonShadow {
+    fill: #666;
+    }
+    .blocklyFlyoutButton:hover {
+    fill: #aaa;
+    }
+    .blocklyFlyoutLabel {
+    cursor: default;
+    }
+    .blocklyFlyoutLabelBackground {
+    opacity: 0;
+    }
+    .blocklyToolboxDelete {
+    cursor: url("/blockpy/static/blockly/media/handdelete.cur"), auto;
+    }
+    .blocklyToolboxGrab {
+    cursor: url("/blockpy/static/blockly/media/handclosed.cur"), auto;
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    }
+    .blocklyToolboxDiv {
+    background-color: #ddd;
+    overflow-x: visible;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 70;
+    -webkit-tap-highlight-color: transparent;
+    }
+    .blocklyTreeRoot {
+    padding: 4px 0;
+    }
+    .blocklyTreeRoot:focus {
+    outline: none;
+    }
+    .blocklyTreeRow {
+    height: 22px;
+    line-height: 22px;
+    margin-bottom: 3px;
+    padding-right: 8px;
+    white-space: nowrap;
+    }
+    .blocklyHorizontalTree {
+    float: left;
+    margin: 1px 5px 8px 0;
+    }
+    .blocklyHorizontalTreeRtl {
+    float: right;
+    margin: 1px 0 8px 5px;
+    }
+    .blocklyToolboxDiv[dir="RTL"] .blocklyTreeRow {
+    margin-left: 8px;
+    }
+    .blocklyTreeRow:not(.blocklyTreeSelected):hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    }
+    .blocklyTreeSeparator {
+    border-bottom: solid #e5e5e5 1px;
+    height: 0;
+    margin: 5px 0;
+    }
+    .blocklyTreeSeparatorHorizontal {
+    border-right: solid #e5e5e5 1px;
+    width: 0;
+    padding: 5px 0;
+    margin: 0 5px;
+    }
+    .blocklyTreeIcon {
+    background-image: url(/blockpy/static/blockly/media/sprites.png);
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    }
+    .blocklyTreeIconClosedLtr {
+    background-position: -32px -1px;
+    }
+    .blocklyTreeIconClosedRtl {
+    background-position: 0 -1px;
+    }
+    .blocklyTreeIconOpen {
+    background-position: -16px -1px;
+    }
+    .blocklyTreeSelected>.blocklyTreeIconClosedLtr {
+    background-position: -32px -17px;
+    }
+    .blocklyTreeSelected>.blocklyTreeIconClosedRtl {
+    background-position: 0 -17px;
+    }
+    .blocklyTreeSelected>.blocklyTreeIconOpen {
+    background-position: -16px -17px;
+    }
+    .blocklyTreeIconNone,
+    .blocklyTreeSelected>.blocklyTreeIconNone {
+    background-position: -48px -1px;
+    }
+    .blocklyTreeLabel {
+    cursor: default;
+    font-family: sans-serif;
+    font-size: 16px;
+    padding: 0 3px;
+    vertical-align: middle;
+    }
+    .blocklyToolboxDelete .blocklyTreeLabel {
+    cursor: url("/blockpy/static/blockly/media/handdelete.cur"), auto;
+    }
+    .blocklyTreeSelected .blocklyTreeLabel {
+    color: #fff;
+    }
+    .blocklyZoom>image, .blocklyZoom>svg>image {
+    opacity: .4;
+    }
+    .blocklyZoom>image:hover, .blocklyZoom>svg>image:hover {
+    opacity: .6;
+    }
+    .blocklyZoom>image:active, .blocklyZoom>svg>image:active {
+    opacity: .8;
+    }
+    .blocklyAngleCircle {
+    stroke: #444;
+    stroke-width: 1;
+    fill: #ddd;
+    fill-opacity: .8;
+    }
+    .blocklyAngleMarks {
+    stroke: #444;
+    stroke-width: 1;
+    }
+    .blocklyAngleGauge {
+    fill: #f88;
+    fill-opacity: .8;
+    pointer-events: none;
+    }
+    .blocklyAngleLine {
+    stroke: #f00;
+    stroke-width: 2;
+    stroke-linecap: round;
+    pointer-events: none;
+    }
+    .blocklyColourTable {
+    border-collapse: collapse;
+    display: block;
+    outline: none;
+    padding: 1px;
+    }
+    .blocklyColourTable>tr>td {
+    border: .5px solid #888;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    height: 20px;
+    padding: 0;
+    width: 20px;
+    }
+    .blocklyColourTable>tr>td.blocklyColourHighlighted {
+    border-color: #eee;
+    box-shadow: 2px 2px 7px 2px rgba(0,0,0,.3);
+    position: relative;
+    }
+    .blocklyColourSelected, .blocklyColourSelected:hover {
+    border-color: #eee !important;
+    outline: 1px solid #333;
+    position: relative;
+    }
+    .blocklyHtmlTextAreaInput {
+    font-family: monospace;
+    resize: none;
+    overflow: hidden;
+    height: 100%;
+    text-align: left;
+    }</style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="BlockPy">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>
+        BlockPy Editor
+    </title>
+        <meta property="og:title" content="BlockPy">
+        <meta property="og:site_name" content="BlockPy Server">
+        <meta property="og:url" content="think.cs.vt.edu">
+        <meta property="og:description" content="BlockPy is a web-based Python environment that lets you work with blocks, text, or both. Designed for Data Science and equipped with powerful tools like the State Explorer and Guided Feedback, the goal of BlockPy is to let you solve authentic, real-world problems.">
+    
+        <link rel="shortcut icon" href="/blockpy/static/images/favicon.ico">
+    
+        <script type="text/javascript">
+            // Use $SCRIPT_ROOT to access all URLS on the server
+            window.$URL_ROOT = "https://think.cs.vt.edu/blockpy/";
+        </script>
+    
+        
+            <script type="text/javascript" src="/blockpy/static/gen/libs.js?ca83c9d1"></script><style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style>
+        
+        
+            <link rel="stylesheet" href="/blockpy/static/gen/libs.css?a5c21658">
+        
+    
+        <script type="text/javascript" src="/blockpy/static/libs/blockpy_server/frontend.js"></script>
+    
+        <style>
+            body {
+                font-size: 14px;
+            }
+    
+            a {
+                text-decoration: underline;
+            }
+    
+            a[role="button"], button a, a.btn, .btn a, .nav a, .navbar a,
+            .dropdown-menu a {
+                text-decoration: none;
+            }
+    
+            .dropdown-menu, .form-control {
+                font-size: 14px;
+            }
+    
+            button, input.btn, a.btn {
+                font-size: 14px;
+            }
+    
+            .navbar-inverse .navbar-nav > li > a {
+                color: white;
+            }
+    
+            .navbar-inverse a.navbar-brand {
+                color: white;
+            }
+    
+            .navbar-inverse .navbar-link.btn.btn-outline-secondary {
+                color: black;
+            }
+    
+            .nav-item.active {
+                background-color: black;
+            }
+    
+            .bg-dark {
+                background-color: #222 !important;
+            }
+    
+            .nav a.dropdown-toggle:focus {
+                outline: 1px solid rgb(77, 144, 254);
+            }
+    
+            table caption {
+                color: #333;
+            }
+    
+            .label-default {
+                background-color: #444;
+            }
+    
+            .btn-outline-secondary {
+                color: black;
+                background-color: white;
+            }
+    
+            .btn-sm {
+                font-size: 12px;
+            }
+    
+            form label {
+                font-weight: bold;
+            }
+    
+            /* Highlight JS */
+            td.hljs-ln-numbers {
+                text-align: center;
+                color: black;
+                background: lightgrey;
+                border-right: 1px solid #999;
+                vertical-align: top;
+                padding-left: 5px;
+    
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            td.hljs-ln-code {
+                padding-left: 10px;
+            }
+    
+            pre.python-code-block code {
+                overflow: auto;
+            }
+    
+            code.hljs {
+                background: white;
+                border: 1px solid lightgrey;
+                font-family: monospace;
+                font-size: 14px;
+                padding: 0px;
+            }
+    
+            table.hljs-ln tr {
+                border-bottom: 1px dashed #F0F0F0;
+            }
+    
+            /* Spinner */
+            .spinner-loader {
+                border: 4px solid #f3f3f3; /* Light grey */
+                border-top: 4px solid #3498db; /* Blue */
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                animation: spin 2s linear infinite;
+            }
+    
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+    
+            /** Model Selector **/
+            .model-selector.badge {
+                font-size: 12px;
+            }
+    
+            div.overlay {
+                height: 100%;
+                width: 100%;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                background-color: rgba(16, 16, 16, 0.5);
+                overflow-x: hidden; /* Disable horizontal scroll */
+                transition: 0.5s;
+            }
+    
+        </style>
+    
+        <style>
+            
+            
+        </style>
+    
+        
+    
+        
+            <link rel="stylesheet" href="/blockpy/static/gen/blockpy.css?441ff7dd">
+        
+    
+        
+            <script type="text/javascript" src="/blockpy/static/gen/blockly.js?4826734f"></script>
+        
+    
+        
+            <script type="text/javascript" src="/blockpy/static/gen/skulpt.js?06fb190f"></script>
+        
+    
+        
+            <script type="text/javascript" src="/blockpy/static/gen/pedal.js?03a6888c"></script>
+        
+    
+        
+            <script type="text/javascript" src="/blockpy/static/gen/blockpy.js?91105b22"></script>
+        
+    
+        <style>
+            .embedded-data {
+                display: none;
+            }
+    
+            .correct-submission {
+                background-color: #ded;
+            }
+    
+            .incorrect-submission {
+                background-color: #edd;
+            }
+    
+            .secret-submission {
+                background-color: #dde;
+            }
+        </style>
+    
+    
+    
+        <script type="text/javascript">
+            
+            
+    
+            
+                $(document).ready(function () {
+                    $("#blockpy\\.load").parent().addClass("active");
+                });
+            
+        </script>
+    
+    
+    <style type="text/css">
+    @font-face {
+      font-weight: 400;
+      font-style:  normal;
+      font-family: 'Circular-Loom';
+    
+      src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Book-cd7d2bcec649b1243839a15d5eb8f0a3.woff2') format('woff2');
+    }
+    
+    @font-face {
+      font-weight: 500;
+      font-style:  normal;
+      font-family: 'Circular-Loom';
+    
+      src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Medium-d74eac43c78bd5852478998ce63dceb3.woff2') format('woff2');
+    }
+    
+    @font-face {
+      font-weight: 700;
+      font-style:  normal;
+      font-family: 'Circular-Loom';
+    
+      src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Bold-83b8ceaf77f49c7cffa44107561909e4.woff2') format('woff2');
+    }
+    
+    @font-face {
+      font-weight: 900;
+      font-style:  normal;
+      font-family: 'Circular-Loom';
+    
+      src: url('https://cdn.loom.com/assets/fonts/circular/CircularXXWeb-Black-bf067ecb8aa777ceb6df7d72226febca.woff2') format('woff2');
+    }</style></head>
+    <body>
+    
+    
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/blockpy/">
+                    <img alt="BlockPy Brand" role="presentation" src="https://scratch.qubitscs.com/static/logo.jpg" style="height: 40px; border-radius: 5px;">
+                </a>
+                
+                <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" role="presentation"></span>
+                </button>
+    
+                <div id="navbar" class="navbar-collapse collapse" style="">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" id="index" href="/blockpy/">Python IDE</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                    <form class="form-inline">
+                        
+                            <a class="btn mr-2 btn-light btn-sm" href="/blockpy/users/login">Log in</a>
+                            <a class="btn btn-light btn-sm" href="/blockpy/users/register">Register</a>
+                        
+                    </form>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+    
+    
+    
+        <script>
+            
+        </script>
+    
+    
+    
+    <div class="overlay" style="display:none"></div>
+    
+    <div class="container-fluid" role="main">
+        
+    
+        
+    
+        
+        <script>
+        function checkCookies() {
+            let cookieEnabled = navigator.cookieEnabled;
+            if (!cookieEnabled){
+                document.cookie = "testcookie";
+                cookieEnabled = document.cookie.indexOf("testcookie")!==-1;
+            }
+            return cookieEnabled;
+        }
+        if (!checkCookies()) {
+            alert("Cookies appear to be disabled. You might need to disable an ad-blocker, adjust your security settings, or use a different browser (we recommend Chrome).");
+        }
+        </script>
+        
+    
+        
+            <script>
+                function markCorrect(args) {
+                }
+            </script>
+        
+    
+    
+        <!-- Main BlockPy canvas -->
+        <div id="blockpy-div" style="height:100%"><div class="blockpy-content container-fluid">
+    
+        <!-- Dialog -->
+        
+        <div class="blockpy-dialog modal hidden" role="dialog" aria-label="Dialog" aria-hidden="true" aria-modal="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" role="region" aria-label="Dialog content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Dynamic Content</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="max-width:100%; max-height:400px">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white modal-close" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success modal-okay" data-dismiss="modal">Okay</button>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    
+        
+        <!-- Hidden Capture Canvas -->
+        <canvas id="capture-canvas" class="d-none" role="presentation" aria-hidden="true"></canvas>
+        
+        <!-- Row 1: Header and Quick Menu -->
+        <div class="row">
+             
+             <!-- Description -->
+             <div class="col-md-10 blockpy-panel blockpy-header" role="heading" aria-label="Assignment Description">
+             
+                <!-- Assignment Name -->
+                <span role="heading" aria-level="1" class="blockpy-name">
+                    <strong>Qubits Python IDE</strong> 
+                    <span data-bind="text: assignment.name">Scratch Canvas</span>
+                </span>
+                
+                <!-- Reset Instructions Button -->
+                <div class="blockpy-instructions-reset" data-bind="visible: ui.instructions.isChanged" style="display: none;">
+                    <a class="float-right" data-bind="click: ui.instructions.reset" href="">
+                        Reset instructions</a>
+                </div>
+                
+                <!-- Instructions -->
+                <div class="blockpy-instructions" data-bind="html: ui.instructions.current"><p>Welcome to Qubits Python IDE. Try editing and running the code below.</p>
+    </div>
+            </div>
+            
+            <div class="col-md-2 blockpy-panel blockpy-quick-menu" role="menubar" aria-label="Quick Menu" title="Quick Menu">
+                <!-- Get Shareable Link -->
+                <!--<button class="btn btn-outline-secondary btn-sm">
+                    Get shareable link</button>-->
+                <span data-bind="visible: ui.menu.isSubmitted" style="display: none;">
+                    Your submission is ready to be reviewed!</span>
+                <button class="btn btn-outline-secondary btn-sm" data-bind="visible: ui.menu.canMarkSubmitted,
+                               text: ui.menu.textMarkSubmitted,
+                               click: ui.menu.clickMarkSubmitted" style="display: none;">Submit</button>
+                <!-- View as instructor -->
+                <div class="form-check" data-bind="visible: ui.role.isGrader" style="display: none;">
+                    <input class="form-check-input" type="checkbox" value="" id="blockpy-as-instructor" data-bind="checked: display.instructor">
+                    <label class="form-check-label" for="blockpy-as-instructor">
+                        View as instructor
+                    </label>
+                </div>
+                <!-- Readonly mode for spying -->
+                <div data-bind="if: submission.ownerId() != user.id()"></div>
+                
+                
+                <button class="btn btn-outline-secondary btn-sm" data-bind="click: ui.menu.clickFullscreen" title="Full Screen"><span class="fas fa-expand-arrows-alt" ,="" data-bind="class: ui.menu.textFullscreen"></span></button>
+                <button class="btn btn-outline-secondary btn-sm" data-bind="click: ui.menu.editInputs, visible: ui.menu.showQueuedInputs" title="Edit Inputs"><span class="fas fa-list-alt"></span></button>
+                <span class="blockpy-student-error fas fa-bug" title="Click to see Original Error" style="display: none;" data-original-title="Click to see Original Error"></span>
+            </div>
+             
+        </div>
+        
+        <!-- Row 2: Console and Feedback -->
+        <!-- ko if: ui.secondRow.isAllVisible -->
+        
+        <!-- /ko -->
+        
+        <!-- Row 3: File Navigation -->
+        <!-- ko if: ui.files.visible --><!-- /ko -->
+        
+        <!-- Row 4: View Row -->
+        <div class="row">
+            
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Text'" style="display: none;">
+        <div>
+        
+        <div>
+        <textarea class="blockpy-editor-text" style="display: none;"></textarea><div class="CodeMirror cm-s-default"><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-width: 3px;"><div style="position: relative;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>&ZeroWidthSpace;</span>x</span></div><div class="CodeMirror-measure"><pre class="CodeMirror-line" role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"></div><div class="CodeMirror-code" role="presentation" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" tabindex="0"></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 1px;"></div></div></div></div>
+        </div>
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Python'" style="">
+        <div>
+        
+    
+        <div class="blockpy-python-toolbar col-md-12 btn-toolbar" role="toolbar" aria-label="Python Toolbar">
+    
+             <div class="btn-group mr-2" role="group" aria-label="Run Group">         
+                <button type="button" class="btn blockpy-run notransition" data-bind="click: ui.execute.run,
+                                css: {'blockpy-run-running': ui.execute.isRunning}">
+                    <span class="fas fa-play"></span> Run
+                 </button>
+             </div>
+             
+             <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                <!-- ko if: $root.assignment.settings.enableBlocks() -->
+                <label class="btn btn-outline-secondary blockpy-mode-set-blocks" data-bind="css: {active: display.pythonMode() === 'block'},
+                               click: ui.editors.python.updateMode.bind($data, 'block')">
+                    <span class="fas fa-th-large"></span>
+                    <input type="radio" name="blockpy-mode-set" autocomplete="off" checked=""> Blocks
+                </label>
+                <label class="btn btn-outline-secondary blockpy-mode-set-blocks active" data-bind="css: {active: display.pythonMode() === 'split'},
+                               click: ui.editors.python.updateMode.bind($data, 'split')">
+                    <span class="fas fa-columns"></span>
+                    <input type="radio" name="blockpy-mode-set" autocomplete="off" checked=""> Split
+                </label>
+                <label class="btn btn-outline-secondary blockpy-mode-set-blocks" data-bind="css: {active: display.pythonMode() === 'text'},
+                               click: ui.editors.python.updateMode.bind($data, 'text')">
+                    <span class="fas fa-align-left"></span>
+                    <input type="radio" name="blockpy-mode-set" autocomplete="off" checked=""> Text
+                </label>
+                <!-- /ko -->
+             </div>
+    
+             <div class="btn-group mr-2" role="group" aria-label="Reset Group">
+                 <button type="button" class="btn btn-outline-secondary" data-bind="click: ui.editors.reset">
+                     <span class="fas fa-sync"></span> Reset
+                  </button>
+             </div>
+             
+             <!-- ko if: !assignment.settings.hideImportDatasetsButton() -->
+             <div class="btn-group mr-2" role="group" aria-label="Import Group">
+                <button type="button" class="btn btn-outline-secondary" data-bind="click: ui.editors.importDataset">
+                    <span class="fas fa-cloud-download-alt"></span> Import datasets
+                 </button>
+             </div>
+             <!-- /ko -->
+             
+             <div class="btn-group mr-2">
+                    <label class="btn btn-outline-secondary">
+                        <span class="fas fa-file-upload"></span> Upload
+                        <input class="blockpy-toolbar-upload" type="file" hidden="" data-bind="event: {change: ui.editors.upload}">
+                     </label>
+    
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item blockpy-toolbar-download" data-bind="click: ui.editors.download">
+                        <span class="fas fa-download"></span> Download
+                        </a>
+                    </div>
+                </div>
+             
+             <div class="btn-group mr-2" role="group" aria-label="History Group">
+                <button type="button" class="btn btn-outline-secondary" data-bind="click: ui.editors.python.toggleHistoryMode,
+                               enable: ui.editors.python.isHistoryAvailable,
+                               css: { active: display.historyMode },
+                               attr: { 'aria-pressed': display.historyMode }" disabled="">
+                    <span class="fas fa-history"></span> History
+                 </button>
+             </div>
+             
+             <!-- Fully functional, but a little too.. Invasive 
+             <div class="btn-group mr-2" role="group" aria-label="Fullscreen Group"
+                data-bind="visible: display.pythonMode() === 'text'">
+                <button type="button" class="btn btn-outline-secondary"
+                    data-bind="click: ui.editors.python.fullscreen">
+                    <span class="fas fa-expand-arrows-alt"></span> Fullscreen
+                 </button>
+             </div>
+             -->
+             
+             <div class="btn-group mr-2" role="group" aria-label="Save Group" data-bind="visible: ui.editors.canSave" style="display: none;">
+                <button type="button" class="btn btn-outline-secondary">
+                    <span class="fas fa-save"></span> Save
+                 </button>
+             </div>
+             
+             <div class="btn-group mr-2" role="group" aria-label="Delete Group" data-bind="visible: ui.editors.canDelete" style="display: none;">
+                <button type="button" class="btn btn-outline-secondary" ,="" data-bind="click: ui.files.delete">
+                    <span class="fas fa-trash"></span> Delete
+                 </button>
+             </div>
+             
+             <div class="btn-group mr-2" role="group" aria-label="Rename Group" data-bind="visible: ui.editors.canRename" style="display: none;">
+                 <button type="button" class="btn btn-outline-secondary">
+                    <span class="fas fa-file-signature"></span> Rename
+                 </button>
+             </div>
+             
+        </div>
+        
+        
+    <div class="blockpy-history-toolbar col-md-12" data-bind="visible: display.historyMode" style="display: none;">
+    
+        <form class="form-inline">
+            <button class="blockpy-history-start btn btn-outline-secondary mr-2" type="button" data-bind="click: ui.editors.python.history.start">
+                <span class="fas fa-step-backward"></span> Start
+            </button>
+            <button class="btn btn-outline-secondary mr-2" type="button" data-bind="click: ui.editors.python.history.previous">
+                <span class="fas fa-backward"></span> Previous
+            </button>
+            <select class="blockpy-history-selector form-control custom-select mr-2" aria-title="History Selector">
+            </select>
+            <button class="btn btn-outline-secondary mr-2" type="button" data-bind="click: ui.editors.python.history.use">
+                <span class="fas fa-file-import"></span> Use
+            </button>
+            <button class="btn btn-outline-secondary mr-2" type="button" data-bind="click: ui.editors.python.history.next">
+                <span class="fas fa-forward"></span> Next
+            </button>
+            <button class="btn btn-outline-secondary" type="button" data-bind="click: ui.editors.python.history.mostRecent">
+                <span class="fas fa-step-forward"></span> Most Recent
+            </button>
+        </form>
+    </div>
+    
+    
+    
+        <div class="blockpy-python-blockmirror" data-bind="hidden: ui.menu.isSubmitted">
+        <div style="box-sizing: border-box;"></div><div style="box-sizing: border-box; float: left; width: 60%; height: 500px;"><div style="box-sizing: border-box; position: absolute; width: 1060px; height: 500px;"><div class="injectionDiv geras-renderer classic-theme" tabindex="0" aria-label="Blockly Workspace" dir="LTR"><div class="blocklyToolboxDiv blocklyNonSelectable" dir="LTR" style="left: 0px; height: 500px; display: block;"><div role="tree" aria-selected="false" aria-level="0" aria-labelledby="blockly:f.label" aria-expanded="false" class="blocklyTreeRoot" hidefocus="true" tabindex="0" aria-activedescendant="blockly:g"><div id="blockly:f" role="group"><div class="blocklyTreeRow blocklyHidden" id="blockly:f.label" role="presentation" style="padding-left: 0px;"><span class="" style="display: inline-block;"></span><span class="blocklyTreeLabel"></span></div><div style="background-position: -100px 0px;"><div id="blockly:g" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:g.label" aria-setsize="14" aria-posinset="1"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 109, 165);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:g.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Variables</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:h" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:h.label" aria-setsize="14" aria-posinset="2"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(165, 91, 109);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:h.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Decisions</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:i" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:i.label" aria-setsize="14" aria-posinset="3"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(128, 91, 165);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:i.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Iteration</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:j" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:j.label" aria-setsize="14" aria-posinset="4"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 128, 165);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:j.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Functions</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:k" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:k.label" aria-setsize="14" aria-posinset="5"><div class="blocklyTreeSeparator" style="border-left: 8px solid rgb(221, 221, 221);"><span class="" id="blockly:k.label" role="presentation" style="display: inline-block;"></span><span class=""></span></div><div role="group" style="display: none;"></div></div><div id="blockly:l" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:l.label" aria-setsize="14" aria-posinset="6"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 153, 165);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:l.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Calculation</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:m" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:m.label" aria-setsize="14" aria-posinset="7"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 165, 116);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:m.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Output</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:n" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:n.label" aria-setsize="14" aria-posinset="8"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 165, 91);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:n.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Input</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:o" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:o.label" aria-setsize="14" aria-posinset="9"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 165, 116);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:o.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Turtles</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:p" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:p.label" aria-setsize="14" aria-posinset="10"><div class="blocklyTreeSeparator" style="border-left: 8px solid rgb(221, 221, 221);"><span class="" id="blockly:p.label" role="presentation" style="display: inline-block;"></span><span class=""></span></div><div role="group" style="display: none;"></div></div><div id="blockly:q" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:q.label" aria-setsize="14" aria-posinset="11"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 165, 91);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:q.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Values</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:r" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:r.label" aria-setsize="14" aria-posinset="12"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(91, 165, 91);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:r.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Conversion</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:s" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:s.label" aria-setsize="14" aria-posinset="13"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(165, 128, 91);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:s.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Lists</span></div><div role="group" style="background-position: 0px 0px; display: none;"></div></div><div id="blockly:t" role="treeitem" aria-selected="false" aria-level="1" aria-labelledby="blockly:t.label" aria-setsize="14" aria-posinset="14"><div class="blocklyTreeRow" style="padding-left: 0px; border-left: 8px solid rgb(165, 91, 91);"><span class="blocklyTreeIcon blocklyTreeIconNone" id="blockly:t.label" role="presentation" style="display: inline-block;"></span><span class="blocklyTreeLabel">Dictionaries</span></div><div role="group" style="background-position: -100px 0px; display: none;"></div></div></div></div></div></div><svg xmlns="http://www.w3.org/2000/svg" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="blocklySvg" tabindex="0" width="1060px" height="500px" style="display: block;"><defs><pattern id="blocklyGridPattern6076842701418541" patternUnits="userSpaceOnUse" width="100" height="100" x="-126.99999999999972" y="110.99999999999997"><line stroke-width="1" x1="0" y1="0.5" x2="1" y2="0.5"></line></pattern></defs><g class="blocklyWorkspace"><rect height="100%" width="100%" class="blocklyMainBackground" style="fill: url(&quot;#blocklyGridPattern6076842701418541&quot;);"></rect><g class="blocklyBlockCanvas" transform="translate(-126.99999999999972,110.99999999999997) scale(1)"><g class="blocklyMarker"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#4286f4"></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#4286f4"></rect><path transform="" style="display: none" fill="#4286f4"></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#4286f4"></path></g></g><g class="blocklyCursor"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#cc0a0a"></rect><path transform="" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#cc0a0a"><animate attributeType="XML" attributeName="stroke" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path></g></g><g data-id="10fZ;=nZoO9UA-q/2%Zs" class="blocklyDraggable" transform="translate(276,14)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#848449" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 240.37216186523438  v 5  H 270.3721618652344  V 5  H 270.3721618652344  V 21  H 270.3721618652344  V 21  V 25  h -240.87216186523438  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPath" stroke="none" fill="#a5a55b" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 240.37216186523438  v 5  H 270.3721618652344  V 5  H 270.3721618652344  V 21  H 270.3721618652344  V 21  V 25  h -240.87216186523438  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPathLight" stroke="#c0c08c" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 269.8721618652344  H 269.8721618652344  M 0,25  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+    "></path><g transform="translate(10,5)"><text class="blocklyText" x="0" y="13">#&nbsp;Comment:</text></g><g class="blocklyEditableText" transform="translate(94.84251403808594,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="170.52964782714844" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">&nbsp;Sample&nbsp;python&nbsp;program</text></g></g><g data-id="9wJe_$%f~LRy$ZuXOf/}" class="blocklyDraggable" transform="translate(275,83)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#496684" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 145.83746337890625  v 5  H 175.83746337890625  V 5  H 175.83746337890625  V 21  H 175.83746337890625  V 31  H 175.83746337890625  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 1  H 175.83746337890625  V 51  H 50  l -6,4  -3,0  -6,-4  h -7 a 8 8 0 0,0 -8,8  v 37 a 8 8 0 0,0 8,8  H 175.83746337890625  H 175.83746337890625  V 104  V 114  h -146.33746337890625  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b80a5" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 145.83746337890625  v 5  H 175.83746337890625  V 5  H 175.83746337890625  V 21  H 175.83746337890625  V 31  H 175.83746337890625  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 1  H 175.83746337890625  V 51  H 50  l -6,4  -3,0  -6,-4  h -7 a 8 8 0 0,0 -8,8  v 37 a 8 8 0 0,0 8,8  H 175.83746337890625  H 175.83746337890625  V 104  V 114  h -146.33746337890625  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPathLight" stroke="#8ca6c0" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 175.33746337890625  H 175.33746337890625  M 175.83746337890625,31  m -5,14.3  l 3.68,-2.1  M 20,104  m 1.9895923599143455,-1.9895923599143455 a 8.5 8.5 0 0,0 6.0104076400856545,2.4895923599143455  l 147.33746337890625,0  H 175.33746337890625  M 0,114  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+    "></path><g class="blocklyIconGroup" display="block" transform="translate(10,5)"><rect class="blocklyIconShape" rx="4" ry="4" height="16" width="16"></rect><path class="blocklyIconSymbol" d="m4.203,7.296 0,1.368 -0.92,0.677 -0.11,0.41 0.9,1.559 0.41,0.11 1.043,-0.457 1.187,0.683 0.127,1.134 0.3,0.3 1.8,0 0.3,-0.299 0.127,-1.138 1.185,-0.682 1.046,0.458 0.409,-0.11 0.9,-1.559 -0.11,-0.41 -0.92,-0.677 0,-1.366 0.92,-0.677 0.11,-0.41 -0.9,-1.559 -0.409,-0.109 -1.046,0.458 -1.185,-0.682 -0.127,-1.138 -0.3,-0.299 -1.8,0 -0.3,0.3 -0.126,1.135 -1.187,0.682 -1.043,-0.457 -0.41,0.11 -0.899,1.559 0.108,0.409z"></path><circle class="blocklyIconShape" r="2.7" cx="8" cy="8"></circle></g><g transform="translate(37,5)"><text class="blocklyText" x="0" y="13">define</text></g><g class="blocklyEditableText" transform="translate(81.94271850585938,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="80.89474487304688" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">split_name</text></g><g transform="translate(79.61988830566406,31)"><text class="blocklyText" x="0" y="13">parameters:</text></g><g data-id=")SOh{mts#A[i5Ej=N#_V" transform="translate(168.83746337890625,26)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#496684" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b80a5" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8ca6c0" d=" m 8,0  m 0.5,0.5  H 82.75411987304688  H 82.75411987304688  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="65.25411987304688" class="blocklyFieldRect blocklyDropdownRect" stroke="#8ca6c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">name<tspan style="fill: rgb(91, 128, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g><g data-id="4?O+049I;BhX8f`bLg#T" class="blocklyDraggable" transform="translate(21,52)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#496684" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 299.60337829589844  v 5  H 329.60337829589844  V 5  H 329.60337829589844  V 43  H 329.60337829589844  V 43  V 47  h -300.10337829589844  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 64.29632568359375,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 255.3070526123047  v -38 z"></path><path class="blocklyPath" stroke="none" fill="#5b80a5" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 299.60337829589844  v 5  H 329.60337829589844  V 5  H 329.60337829589844  V 43  H 329.60337829589844  V 43  V 47  h -300.10337829589844  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 64.29632568359375,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 255.3070526123047  v -38 z"></path><path class="blocklyPathLight" stroke="#8ca6c0" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 329.10337829589844  H 329.10337829589844  M 0,47  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+     M 320.10337829589844,5.5  v 38  h -255.3070526123047  M 64.29632568359375,10  m -5,14.3  l 3.68,-2.1 "></path><g data-id="j-ZpULXF622ePHZyW$@a" class="blocklyDraggable" transform="translate(57.29632568359375,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#498449" d=" m 8,0  h 253.3070526123047  v 5  H 261.3070526123047  V 5  H 261.3070526123047  V 32  H 261.3070526123047  V 32  V 36  h -253.3070526123047  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 24,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 77.25411987304688  v -27 z M 166.35215759277344,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 70.07301330566406  v -27 z"></path><path class="blocklyPath" stroke="none" fill="#5ba55b" d=" m 8,0  h 253.3070526123047  v 5  H 261.3070526123047  V 5  H 261.3070526123047  V 32  H 261.3070526123047  V 32  V 36  h -253.3070526123047  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 24,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 77.25411987304688  v -27 z M 166.35215759277344,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 70.07301330566406  v -27 z"></path><path class="blocklyPathLight" stroke="#8cc08c" d=" m 8,0  m 0.5,0.5  H 260.8070526123047  H 260.8070526123047  M 8.5,35.5  M 8.5,35.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+     M 101.75411987304688,5.5  v 27  h -77.25411987304688  M 24,10  m -5,14.3  l 3.68,-2.1  M 236.9251708984375,5.5  v 27  h -70.07301330566406  M 166.35215759277344,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(111.25411987304688,10)"><text class="blocklyText" x="0" y="13">.split&nbsp;(</text></g><g transform="translate(246.4251708984375,10)"><text class="blocklyText" x="0" y="13">)</text></g><g data-id="li#{:ny}g,jWygKE-})i" class="blocklyDraggable" transform="translate(159.35215759277344,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#498449" d=" m 8,0  h 68.07301330566406  v 5  H 76.07301330566406  V 5  H 76.07301330566406  V 21  H 76.07301330566406  V 21  V 25  h -68.07301330566406  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5ba55b" d=" m 8,0  h 68.07301330566406  v 5  H 76.07301330566406  V 5  H 76.07301330566406  V 21  H 76.07301330566406  V 21  V 25  h -68.07301330566406  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8cc08c" d=" m 8,0  m 0.5,0.5  H 75.57301330566406  H 75.57301330566406  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g transform="translate(18,5)"><image height="12px" width="12px" alt="“" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC"></image></g><g class="blocklyEditableText" transform="translate(35,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="14.073013305664062" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">&nbsp;</text></g><g transform="translate(54.07301330566406,5)"><image height="12px" width="12px" alt="”" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg=="></image></g></g><g data-id="ah/IbbfJRbQWp{SrS=2k" class="blocklyDraggable" transform="translate(17,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 82.75411987304688  H 82.75411987304688  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="65.25411987304688" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">name<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g></g><g transform="translate(10,10)"><text class="blocklyText" x="0" y="13">return</text></g></g></g><g data-id="%-v))d/m}X7UM/y:9-#{" class="blocklyDraggable" transform="translate(269,236)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#844957" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 20  v 5  H 50  V 5  H 50  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 12  H 50  V 36  H 50  l -6,4  -3,0  -6,-4  h -7 a 8 8 0 0,0 -8,8  v 85 a 8 8 0 0,0 8,8  H 50  H 50  V 137  V 147  h -20.5  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPath" stroke="none" fill="#a55b6d" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 20  v 5  H 50  V 5  H 50  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 12  H 50  V 36  H 50  l -6,4  -3,0  -6,-4  h -7 a 8 8 0 0,0 -8,8  v 85 a 8 8 0 0,0 8,8  H 50  H 50  V 137  V 147  h -20.5  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+    "></path><path class="blocklyPathLight" stroke="#c08c99" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 49.5  H 49.5  M 50,5  m -5,14.3  l 3.68,-2.1  M 20,137  m 1.9895923599143455,-1.9895923599143455 a 8.5 8.5 0 0,0 6.0104076400856545,2.4895923599143455  l 21.5,0  H 49.5  M 0,147  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+    "></path><g transform="translate(10,5)"><text class="blocklyText" x="0" y="13">if</text></g><g data-id="$!MuUADSFot!)mtyZ?WN" class="blocklyDraggable" transform="translate(43,0)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#844957" d=" m 8,0  h 327.95989990234375  v 5  H 335.95989990234375  V 5  H 335.95989990234375  V 32  H 335.95989990234375  V 32  V 36  h -327.95989990234375  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 24,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 109.86685180664062  v -27 z M 195.5719451904297,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 130.38795471191406  v -27 z"></path><path class="blocklyPath" stroke="none" fill="#a55b6d" d=" m 8,0  h 327.95989990234375  v 5  H 335.95989990234375  V 5  H 335.95989990234375  V 32  H 335.95989990234375  V 32  V 36  h -327.95989990234375  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 24,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 109.86685180664062  v -27 z M 195.5719451904297,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 130.38795471191406  v -27 z"></path><path class="blocklyPathLight" stroke="#c08c99" d=" m 8,0  m 0.5,0.5  H 335.45989990234375  H 335.45989990234375  M 8.5,35.5  M 8.5,35.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+     M 134.36685180664062,5.5  v 27  h -109.86685180664062  M 24,10  m -5,14.3  l 3.68,-2.1  M 326.45989990234375,5.5  v 27  h -130.38795471191406  M 195.5719451904297,10  m -5,14.3  l 3.68,-2.1 "></path><g data-id="9l3z64Rn+p[{^?g%N0.+" class="blocklyDraggable" transform="translate(17,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 107.86685180664062  v 5  H 115.86685180664062  V 5  H 115.86685180664062  V 21  H 115.86685180664062  V 21  V 25  h -107.86685180664062  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 107.86685180664062  v 5  H 115.86685180664062  V 5  H 115.86685180664062  V 21  H 115.86685180664062  V 21  V 25  h -107.86685180664062  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 115.36685180664062  H 115.36685180664062  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="97.86685180664062" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">__name__<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g><g data-id="8oO{Aue4N#yhlCn;TPv{" class="blocklyDraggable" transform="translate(188.5719451904297,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#498449" d=" m 8,0  h 128.38795471191406  v 5  H 136.38795471191406  V 5  H 136.38795471191406  V 21  H 136.38795471191406  V 21  V 25  h -128.38795471191406  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5ba55b" d=" m 8,0  h 128.38795471191406  v 5  H 136.38795471191406  V 5  H 136.38795471191406  V 21  H 136.38795471191406  V 21  V 25  h -128.38795471191406  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8cc08c" d=" m 8,0  m 0.5,0.5  H 135.88795471191406  H 135.88795471191406  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g transform="translate(18,5)"><image height="12px" width="12px" alt="“" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC"></image></g><g class="blocklyEditableText" transform="translate(35,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="74.38795471191406" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">__main__</text></g><g transform="translate(114.38795471191406,5)"><image height="12px" width="12px" alt="”" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg=="></image></g></g><g class="blocklyEditableText" transform="translate(138.86685180664062,10)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="45.70509338378906" class="blocklyFieldRect blocklyDropdownRect" stroke="#c08c99" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">==<tspan style="fill: rgb(165, 91, 109);"> ▼</tspan></text><image style="display: none;"></image></g></g><g data-id="7rdDF,ZNYff9vs{Jjlar" class="blocklyDraggable" transform="translate(21,37)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 389.59190368652344  v 5  H 419.59190368652344  V 5  H 419.59190368652344  V 43  H 419.59190368652344  V 43  V 47  h -390.09190368652344  l -6,4  -3,0  -6,-4  h -14.5  H 0 z
+     M 129.3715057373047,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 280.22039794921875  v -38 z"></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 389.59190368652344  v 5  H 419.59190368652344  V 5  H 419.59190368652344  V 43  H 419.59190368652344  V 43  V 47  h -390.09190368652344  l -6,4  -3,0  -6,-4  h -14.5  H 0 z
+     M 129.3715057373047,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 280.22039794921875  v -38 z"></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 419.09190368652344  H 419.09190368652344  M 0.5,46.5  V 8 
+     M 410.09190368652344,5.5  v 38  h -280.22039794921875  M 129.3715057373047,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(10,10)"><text class="blocklyText" x="0" y="13">set</text></g><g class="blocklyEditableText" transform="translate(34.556182861328125,10)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="65.25411987304688" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">name<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g><g transform="translate(104.810302734375,10)"><text class="blocklyText" x="0" y="13">=</text></g><g data-id=")!R61I7bqx1Q{7iSdfQ)" class="blocklyDraggable" transform="translate(122.37150573730469,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#49847a" d=" m 8,0  h 278.22039794921875  v 5  H 286.22039794921875  V 5  H 286.22039794921875  V 32  H 286.22039794921875  V 32  V 36  h -278.22039794921875  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 74.74443054199219,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 186.59408569335938  v -27 z"></path><path class="blocklyPath" stroke="none" fill="#5ba599" d=" m 8,0  h 278.22039794921875  v 5  H 286.22039794921875  V 5  H 286.22039794921875  V 32  H 286.22039794921875  V 32  V 36  h -278.22039794921875  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 74.74443054199219,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 186.59408569335938  v -27 z"></path><path class="blocklyPathLight" stroke="#8cc0b8" d=" m 8,0  m 0.5,0.5  H 285.72039794921875  H 285.72039794921875  M 8.5,35.5  M 8.5,35.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+     M 261.83851623535156,5.5  v 27  h -186.59408569335938  M 74.74443054199219,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(18,10)"><text class="blocklyText" x="0" y="13">input&nbsp;(</text></g><g transform="translate(271.33851623535156,10)"><text class="blocklyText" x="0" y="13">)</text></g><g data-id=";@uU~%4i[R=Ja1)*;faL" class="blocklyDraggable" transform="translate(67.74443054199219,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#498449" d=" m 8,0  h 184.59408569335938  v 5  H 192.59408569335938  V 5  H 192.59408569335938  V 21  H 192.59408569335938  V 21  V 25  h -184.59408569335938  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5ba55b" d=" m 8,0  h 184.59408569335938  v 5  H 192.59408569335938  V 5  H 192.59408569335938  V 21  H 192.59408569335938  V 21  V 25  h -184.59408569335938  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8cc08c" d=" m 8,0  m 0.5,0.5  H 192.09408569335938  H 192.09408569335938  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g transform="translate(18,5)"><image height="12px" width="12px" alt="“" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAn0lEQVQI1z3OMa5BURSF4f/cQhAKjUQhuQmFNwGJEUi0RKN5rU7FHKhpjEH3TEMtkdBSCY1EIv8r7nFX9e29V7EBAOvu7RPjwmWGH/VuF8CyN9/OAdvqIXYLvtRaNjx9mMTDyo+NjAN1HNcl9ZQ5oQMM3dgDUqDo1l8DzvwmtZN7mnD+PkmLa+4mhrxVA9fRowBWmVBhFy5gYEjKMfz9AylsaRRgGzvZAAAAAElFTkSuQmCC"></image></g><g class="blocklyEditableText" transform="translate(35,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="130.59408569335938" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">Enter&nbsp;your&nbsp;name&nbsp;:&nbsp;</text></g><g transform="translate(170.59408569335938,5)"><image height="12px" width="12px" alt="”" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAKCAQAAAAqJXdxAAAAqUlEQVQI1z3KvUpCcRiA8ef9E4JNHhI0aFEacm1o0BsI0Slx8wa8gLauoDnoBhq7DcfWhggONDmJJgqCPA7neJ7p934EOOKOnM8Q7PDElo/4x4lFb2DmuUjcUzS3URnGib9qaPNbuXvBO3sGPHJDRG6fGVdMSeWDP2q99FQdFrz26Gu5Tq7dFMzUvbXy8KXeAj57cOklgA+u1B5AoslLtGIHQMaCVnwDnADZIFIrXsoXrgAAAABJRU5ErkJggg=="></image></g></g></g><g data-id="tw]4*2RO:F,SFFz{,C29" class="blocklyDraggable" transform="translate(0,48)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#49847a" d=" m 0,0  h 15  l 6,4  3,0  6,-4  h 268.3406524658203  v 5  H 298.3406524658203  V 5  H 298.3406524658203  V 43  H 298.3406524658203  V 43  V 47  h -268.8406524658203  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 63.47312927246094,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 209.9856414794922  v -38 z"></path><path class="blocklyPath" stroke="none" fill="#5ba599" d=" m 0,0  h 15  l 6,4  3,0  6,-4  h 268.3406524658203  v 5  H 298.3406524658203  V 5  H 298.3406524658203  V 43  H 298.3406524658203  V 43  V 47  h -268.8406524658203  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 63.47312927246094,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 18  h 209.9856414794922  v -38 z"></path><path class="blocklyPathLight" stroke="#8cc0b8" d=" m 0,0  m 0.5,0.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 297.8406524658203  H 297.8406524658203  M 0,47  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 0.5 
+     M 273.9587707519531,5.5  v 38  h -209.9856414794922  M 63.47312927246094,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(10,10)"><text class="blocklyText" x="0" y="13">print&nbsp;(</text></g><g transform="translate(283.4587707519531,10)"><text class="blocklyText" x="0" y="13">)</text></g><g data-id="7t9j`[|{Qz_l!g!RE=;n" class="blocklyDraggable" transform="translate(56.47312927246094,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#496684" d=" m 8,0  h 207.9856414794922  v 5  H 215.9856414794922  V 5  H 215.9856414794922  V 32  H 215.9856414794922  V 32  V 36  h -207.9856414794922  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 113.84963989257812,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 77.25411987304688  v -27 z"></path><path class="blocklyPath" stroke="none" fill="#5b80a5" d=" m 8,0  h 207.9856414794922  v 5  H 215.9856414794922  V 5  H 215.9856414794922  V 32  H 215.9856414794922  V 32  V 36  h -207.9856414794922  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+     M 113.84963989257812,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 77.25411987304688  v -27 z"></path><path class="blocklyPathLight" stroke="#8ca6c0" d=" m 8,0  m 0.5,0.5  H 215.4856414794922  H 215.4856414794922  M 8.5,35.5  M 8.5,35.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+     M 191.603759765625,5.5  v 27  h -77.25411987304688  M 113.84963989257812,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(18,10)"><text class="blocklyText" x="0" y="13">split_name&nbsp;(</text></g><g transform="translate(201.103759765625,10)"><text class="blocklyText" x="0" y="13">)</text></g><g data-id="f*P_C@mYCF%}(gYlK3,8" class="blocklyDraggable" transform="translate(106.84963989257812,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 82.75411987304688  H 82.75411987304688  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="65.25411987304688" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">name<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g></g></g></g></g></g><g class="blocklyBubbleCanvas" transform="translate(-126.99999999999972,110.99999999999997) scale(1)"></g><rect height="25" width="25" class="blocklyScrollbarBackground" x="1034.5" y="474.5"></rect><defs><filter id="blocklyEmbossFilter957755877404135"><feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"></feGaussianBlur><feSpecularLighting in="blur" surfaceScale="1" specularConstant="0.5" specularExponent="10" lighting-color="white" result="specOut"><fePointLight x="-5000" y="-10000" z="20000"></fePointLight></feSpecularLighting><feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"></feComposite><feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite></filter><pattern id="blocklyDisabledPattern957755877404135" patternUnits="userSpaceOnUse" width="10" height="10"><rect width="10" height="10" fill="#aaa"></rect><path d="M 0 0 L 10 10 M 10 0 L 0 10" stroke="#cc0"></path></pattern></defs></g></svg><svg class="blocklyScrollbarVertical blocklyMainWorkspaceScrollbar" width="25" height="474" style="transform: translate(1034.5px, 0.5px);"><g><rect class="blocklyScrollbarBackground" width="25" height="474"></rect><rect class="blocklyScrollbarHandle" rx="10" ry="10" width="20" x="2.5" height="271.1670480549199" y="67.79176201373"></rect></g></svg><svg class="blocklyScrollbarHorizontal blocklyMainWorkspaceScrollbar" height="25" width="923" style="transform: translate(111.5px, 474.5px);"><g><rect class="blocklyScrollbarBackground" height="25" width="923"></rect></g></svg><svg class="blocklyFlyout" style="display: none"><path class="blocklyFlyoutBackground"></path><g class="blocklyWorkspace"><g class="blocklyBlockCanvas"><g class="blocklyMarker"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#4286f4"></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#4286f4"></rect><path transform="" style="display: none" fill="#4286f4"></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#4286f4"></path></g></g><g class="blocklyCursor"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#cc0a0a"></rect><path transform="" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#cc0a0a"><animate attributeType="XML" attributeName="stroke" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path></g></g></g><g class="blocklyBubbleCanvas"></g><defs><filter id="blocklyEmbossFilter20179759850455192"><feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"></feGaussianBlur><feSpecularLighting in="blur" surfaceScale="1" specularConstant="0.5" specularExponent="10" lighting-color="white" result="specOut"><fePointLight x="-5000" y="-10000" z="20000"></fePointLight></feSpecularLighting><feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"></feComposite><feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite></filter><pattern id="blocklyDisabledPattern20179759850455192" patternUnits="userSpaceOnUse" width="10" height="10"><rect width="10" height="10" fill="#aaa"></rect><path d="M 0 0 L 10 10 M 10 0 L 0 10" stroke="#cc0"></path></pattern></defs></g></svg><svg class="blocklyScrollbarVertical blocklyFlyoutScrollbar" width="25"><g><rect class="blocklyScrollbarBackground" width="25"></rect><rect class="blocklyScrollbarHandle" rx="10" ry="10" width="20" x="2.5"></rect></g></svg><svg class="blocklyFlyout" style="display: none; transform: translate(111px, 0px);" width="305.6248474121094" height="500"><path class="blocklyFlyoutBackground" d="M 0,0 h 297.6248474121094 a 8 8 0 0 1 8 8 v 484 a 8 8 0 0 1 -8 8 h -297.6248474121094 z"></path><g class="blocklyWorkspace"><g class="blocklyBlockCanvas" transform="translate(0,2) scale(1)"><g class="blocklyMarker"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#4286f4"></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#4286f4"></rect><path transform="" style="display: none" fill="#4286f4"></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#4286f4"></path></g></g><g class="blocklyCursor"><g width="100" height="5"><rect width="100" height="5" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></rect><rect class="blocklyVerticalMarker" rx="10" ry="10" style="display: none" stroke="#cc0a0a"></rect><path transform="" style="display: none" fill="#cc0a0a"><animate attributeType="XML" attributeName="fill" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path><path transform="" style="display: none" fill="none" stroke-width="4" stroke="#cc0a0a"><animate attributeType="XML" attributeName="stroke" dur="1s" values="#cc0a0a;transparent;transparent;" repeatCount="indefinite"></animate></path></g></g><rect fill-opacity="0" x="16" y="52" height="40" width="169.5386199951172"></rect><g data-id="}p$7.YlZY0+Et=3CER$=" class="blocklyDraggable" transform="translate(16,52)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 138.5386199951172  v 5  H 168.5386199951172  V 5  H 168.5386199951172  V 31  H 168.5386199951172  V 31  V 35  h -139.0386199951172  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 144.0386199951172,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 6  h 14.5  v -26 z"></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 138.5386199951172  v 5  H 168.5386199951172  V 5  H 168.5386199951172  V 31  H 168.5386199951172  V 31  V 35  h -139.0386199951172  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 144.0386199951172,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 6  h 14.5  v -26 z"></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 168.0386199951172  H 168.0386199951172  M 0,35  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+     M 159.0386199951172,5.5  v 26  h -14.5  M 144.0386199951172,10  m -5,14.3  l 3.68,-2.1 "></path><g transform="translate(10,10)"><text class="blocklyText" x="0" y="13">set</text></g><g class="blocklyEditableText" transform="translate(34.556182861328125,10)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="79.92123413085938" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">variable<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g><g transform="translate(119.4774169921875,10)"><text class="blocklyText" x="0" y="13">=</text></g></g><rect fill-opacity="0" x="16" y="100" height="41" width="260.6248474121094"></rect><g data-id="-*R.)j5bS]=U+3Nu4`vK" class="blocklyDraggable" transform="translate(16,100)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 229.62484741210938  v 5  H 259.6248474121094  V 5  H 259.6248474121094  V 32  H 259.6248474121094  V 32  V 36  h -230.12484741210938  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 219.47166442871094,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 30.153182983398438  v -27 z"></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 0,0  m 0,8 a 8 8 0 0,1 8,-8  h 7  l 6,4  3,0  6,-4  h 229.62484741210938  v 5  H 259.6248474121094  V 5  H 259.6248474121094  V 32  H 259.6248474121094  V 32  V 36  h -230.12484741210938  l -6,4  -3,0  -6,-4  h -6.5 a 8 8 0 0,1 -8,-8 z
+     M 219.47166442871094,5  v 5  c 0,10  -8,-8  -8,7.5  s 8,-2.5  8,7.5  v 7  h 30.153182983398438  v -27 z"></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 0,0  m 0.5,8 a 7.5 7.5 0 0,1 8,-7.5  H 14.5  h 0.5  l 6,4  3,0  6,-4  H 259.1248474121094  H 259.1248474121094  M 0,36  m 2.6966991411008934,-2.6966991411008934 a 7.5 7.5 0 0,1 -2.1966991411008934,-5.303300858899107  V 8 
+     M 250.12484741210938,5.5  v 27  h -30.153182983398438  M 219.47166442871094,10  m -5,14.3  l 3.68,-2.1 "></path><g data-id="@0EC1#EER~cr4wi1}5T3" transform="translate(212.47166442871094,6)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#bdd6db" d=" m 8,0  h 28.153182983398438  v 5  H 36.15318298339844  V 5  H 36.15318298339844  V 21  H 36.15318298339844  V 21  V 25  h -28.153182983398438  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#bdd6db" d=" m 8,0  h 28.153182983398438  v 5  H 36.15318298339844  V 5  H 36.15318298339844  V 21  H 36.15318298339844  V 21  V 25  h -28.153182983398438  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8cb8c0" d=" m 8,0  m 0.5,0.5  H 35.65318298339844  H 35.65318298339844  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    " style="display: none;"></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: text;"><rect rx="4" ry="4" x="0" y="0" height="16" width="18.153182983398438" class="blocklyFieldRect"></rect><text class="blocklyText" x="5" y="13">1</text></g></g><g class="blocklyEditableText" transform="translate(5,10)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="83.99424743652344" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">increase<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g><g transform="translate(93.99424743652344,10)"><text class="blocklyText" x="0" y="13">&nbsp;</text></g><g class="blocklyEditableText" transform="translate(103.0672607421875,10)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="79.92123413085938" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">variable<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g><g transform="translate(187.98849487304688,10)"><text class="blocklyText" x="0" y="13">by</text></g></g><rect fill-opacity="0" x="8" y="161" height="26" width="116.86685180664062"></rect><g data-id="A~h^|w}d1[i+0lX4:7vV" class="blocklyDraggable" transform="translate(8,161)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 107.86685180664062  v 5  H 115.86685180664062  V 5  H 115.86685180664062  V 21  H 115.86685180664062  V 21  V 25  h -107.86685180664062  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 107.86685180664062  v 5  H 115.86685180664062  V 5  H 115.86685180664062  V 21  H 115.86685180664062  V 21  V 25  h -107.86685180664062  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 115.36685180664062  H 115.36685180664062  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="97.86685180664062" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">__name__<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g><rect fill-opacity="0" x="8" y="195" height="26" width="84.25411987304688"></rect><g data-id="8woZO|b(T]?^|)T,Kgi3" class="blocklyDraggable" transform="translate(8,195)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 75.25411987304688  v 5  H 83.25411987304688  V 5  H 83.25411987304688  V 21  H 83.25411987304688  V 21  V 25  h -75.25411987304688  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 82.75411987304688  H 82.75411987304688  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="65.25411987304688" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">name<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g><rect fill-opacity="0" x="8" y="229" height="26" width="98.92123413085938"></rect><g data-id="ead~!^K5Chpri-7ojYi@" class="blocklyDraggable" transform="translate(8,229)"><path class="blocklyPathDark" transform="translate(1,1)" fill="#495784" d=" m 8,0  h 89.92123413085938  v 5  H 97.92123413085938  V 5  H 97.92123413085938  V 21  H 97.92123413085938  V 21  V 25  h -89.92123413085938  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPath" stroke="none" fill="#5b6da5" d=" m 8,0  h 89.92123413085938  v 5  H 97.92123413085938  V 5  H 97.92123413085938  V 21  H 97.92123413085938  V 21  V 25  h -89.92123413085938  H 8  V 20  c 0,-10  -8,8  -8,-7.5  s 8,2.5  8,-7.5 z
+    "></path><path class="blocklyPathLight" stroke="#8c99c0" d=" m 8,0  m 0.5,0.5  H 97.42123413085938  H 97.42123413085938  M 8.5,24.5  M 8.5,24.5  V 20  v -1.5  m -7.36,-0.5  q -1.52,-5.5  0,-11  m 7.36,1  V 0.5 
+    "></path><g class="blocklyEditableText" transform="translate(13,5)" style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" height="16" width="79.92123413085938" class="blocklyFieldRect blocklyDropdownRect" stroke="#8c99c0" fill="transparent"></rect><text class="blocklyText blocklyDropdownText" text-anchor="start" x="5" y="13">variable<tspan style="fill: rgb(91, 109, 165);"> ▼</tspan></text><image style="display: none;"></image></g></g><g class="blocklyFlyoutButton" transform="translate(16,8)" display="block"><rect class="blocklyFlyoutButtonShadow" rx="4" ry="4" x="1" y="1" width="121.63201904296875" height="20"></rect><rect class="blocklyFlyoutButtonBackground" rx="4" ry="4" width="121.63201904296875" height="20"></rect><text class="blocklyText" x="60.816009521484375" y="15" text-anchor="middle">Create variable...</text></g></g><g class="blocklyBubbleCanvas" transform="translate(0,2) scale(1)"></g><defs><filter id="blocklyEmbossFilter3306703474643289"><feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur"></feGaussianBlur><feSpecularLighting in="blur" surfaceScale="1" specularConstant="0.5" specularExponent="10" lighting-color="white" result="specOut"><fePointLight x="-5000" y="-10000" z="20000"></fePointLight></feSpecularLighting><feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"></feComposite><feComposite in="SourceGraphic" in2="specOut" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"></feComposite></filter><pattern id="blocklyDisabledPattern3306703474643289" patternUnits="userSpaceOnUse" width="10" height="10"><rect width="10" height="10" fill="#aaa"></rect><path d="M 0 0 L 10 10 M 10 0 L 0 10" stroke="#cc0"></path></pattern></defs></g></svg><svg class="blocklyScrollbarVertical blocklyFlyoutScrollbar" width="25" height="495" display="none" style="transform: translate(389.125px, 2.5px);"><g><rect class="blocklyScrollbarBackground" width="25" height="495"></rect><rect class="blocklyScrollbarHandle" rx="10" ry="10" width="20" x="2.5" height="933.5361216730038" y="0"></rect></g></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="blocklyBlockDragSurface" style="display: none; transform: translate3d(269px, 236px, 0px);"><g transform="translate(-127,111) scale(1)"></g></svg><svg xmlns="http://www.w3.org/2000/svg" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="blocklyWsDragSurface blocklyOverflowVisible" width="467" height="250" style="display: none;"></svg></div></div><div style="box-sizing: border-box; height: 500px;"></div></div><div style="box-sizing: border-box; border: 1px solid lightgray; float: left; width: 40%; height: 500px; display: block;"><div style="box-sizing: border-box; height: 100%; float: left; background-color: rgb(221, 221, 221); display: none; width: 0px;"></div><textarea style="box-sizing: border-box; display: none;"></textarea><div class="CodeMirror cm-s-default" style="height: 100%; display: block;"><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="width: 18px; pointer-events: none;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="height: 18px; pointer-events: none; right: 0px; left: 31px;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" draggable="false"><div class="CodeMirror-sizer" style="margin-left: 31px; min-width: 299.562px; margin-bottom: 0px; border-right-width: 30px; min-height: 206px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>9</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style="visibility: hidden;"></div><div class="CodeMirror-code" role="presentation" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" tabindex="0" style=""><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">1</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># Sample python program</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">2</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">&ZeroWidthSpace;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">3</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">def</span> <span class="cm-def">split_name</span>(<span class="cm-variable">name</span>):</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">4</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-keyword">return</span> (<span class="cm-variable">name</span>.<span class="cm-property">split</span>(<span class="cm-string">' '</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">5</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">&ZeroWidthSpace;</span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">6</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">if</span> <span class="cm-variable">__name__</span> <span class="cm-operator">==</span> <span class="cm-string">'__main__'</span>:</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">7</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-variable">name</span> <span class="cm-operator">=</span> <span class="cm-builtin">input</span>(<span class="cm-string">'Enter your name : '</span>)</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">8</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">    <span class="cm-builtin">print</span>(<span class="cm-variable">split_name</span>(<span class="cm-variable">name</span>))</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" contenteditable="false" style="left: -31px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 1px; width: 21px;">9</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">&ZeroWidthSpace;</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; border-bottom: 0px solid transparent; top: 206px;"></div><div class="CodeMirror-gutters" style="left: 0px; height: 236px;"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div><div class="CodeMirror-gutter CodeMirror-foldgutter"></div></div></div></div></div></div>
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Assignment Settings'" style="display: none;">
+        <div>
+        
+        <div class="blockpy-view-settings">
+        
+        <form>
+    
+            <div class="form-group row">
+                <div class="col-sm-12 mx-auto">
+                    <button type="button" class="btn btn-success" data-bind="click: ui.editors.settings.save">Save changes</button>
+                </div>
+            </div>
+        
+            <div class="form-group row">
+                <label for="blockpy-settings-name" class="col-sm-2 col-form-label text-right">Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="blockpy-settings-name" data-bind="value: assignment.name">
+                    <small class="form-text text-muted">
+                        The student-facing name of the assignment. Assignments within a group are ordered alphabetically
+                        by their name, so you may want to use a naming scheme like "#43.5) Whatever".
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="blockpy-settings-url" class="col-sm-2 col-form-label text-right">URL:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="blockpy-settings-url" data-bind="value: assignment.url">
+                    <small class="form-text text-muted">
+                        The course-unique URL that can be used to consistently refer to this assignment. 
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-public">Public:</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-public" data-bind="checked: assignment.public">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If not public, users outside of the course will not be able to see the assignment in course listings.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hidden">Hidden:</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hidden" data-bind="checked: assignment.hidden">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If hidden, students will not be able to see their grade while working on the assignment.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-reviewed">Reviewed:</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-reviewed" data-bind="checked: assignment.reviewed">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If reviewed, the assignment need to be commented upon and regraded by the staff after submission.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-reviewed">Starting View:</label>
+                </div>
+                <div class="col-sm-3">
+                    <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                        <label class="btn btn-outline-secondary blockpy-mode-set-blocks" data-bind="css: {active: assignment.settings.startView() === 'block'},
+                               click: assignment.settings.startView.bind($data, 'block')">
+                    <span class="fas fa-th-large"></span>
+                    <input type="radio" name="blockpy-start-view-set" autocomplete="off" checked=""> Blocks
+                </label>
+                        <label class="btn btn-outline-secondary blockpy-mode-set-blocks active" data-bind="css: {active: assignment.settings.startView() === 'split'},
+                               click: assignment.settings.startView.bind($data, 'split')">
+                    <span class="fas fa-columns"></span>
+                    <input type="radio" name="blockpy-start-view-set" autocomplete="off" checked=""> Split
+                </label>
+                        <label class="btn btn-outline-secondary blockpy-mode-set-blocks" data-bind="css: {active: assignment.settings.startView() === 'text'},
+                               click: assignment.settings.startView.bind($data, 'text')">
+                    <span class="fas fa-align-left"></span>
+                    <input type="radio" name="blockpy-start-view-set" autocomplete="off" checked=""> Text
+                </label>
+                     </div>
+                </div>            
+                <div class="col-sm-7">
+                    <small class="form-text text-muted">
+                        The Python editor mode to start in when the student starts the problem.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="blockpy-settings-ip-ranges" class="col-sm-2 col-form-label text-right">IP Ranges:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="blockpy-settings-ip-ranges" data-bind="value: assignment.ipRanges">
+                    <small class="form-text text-muted">
+                        Provide a comma-separated list of IP Addresses that will be explicitly allowed. If blank,
+                        then all addresses are allowed. If an address starts with <code>^</code> then it it is explicitly
+                        blacklisted, but that can be overridden in turn with a <code>!</code>. Addresses can also
+                        include a bit mask to allow a range of addresses.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="blockpy-settings-passcode" class="col-sm-2 col-form-label text-right">Passcode:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="blockpy-settings-passcode" data-bind="value: assignment.settings.passcode">
+                    <small class="form-text text-muted">
+                        A string that the user must enter to access the problem. If blank, then no passcode is prompted.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="blockpy-settings-datasets" class="col-sm-2 col-form-label text-right">Preloaded Datasets:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="blockpy-settings-datasets" data-bind="value: assignment.settings.datasets">
+                    <small class="form-text text-muted">
+                        The current list of datasets available on load as a comma-separated string.
+                    </small>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label for="blockpy-settings-toolbox" class="col-sm-2 col-form-label text-right">Block Toolbox:</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="blockpy-settings-toolbox" data-bind="value: assignment.settings.toolbox">
+                       <option value="normal">Normal Toolbox</option>
+                       <option value="ct">CT@VT Toolbox</option>
+                       <option value="ct2">CT@VT Toolbox V2</option>
+                       <option value="minimal">Minimal Set</option>
+                       <option value="full">All Blocks</option>
+                       <option value="custom">Custom</option>
+                    </select>
+                    <small class="form-text text-muted">
+                        Which version of the toolbox to present to the user.
+                    </small>
+                </div>
+            </div>
+            
+            
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableTimeout">Disable Timeout</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableTimeout" data-bind="checked: assignment.settings.disableTimeout">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then students code is allowed to run without timeouts (potentially allowing infinite loops).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-isParsons">Is Parsons</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-isParsons" data-bind="checked: assignment.settings.isParsons">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then this is a parson's style question (jumbled).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableFeedback">Disable Feedback</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableFeedback" data-bind="checked: assignment.settings.disableFeedback">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then no instructor scripts are run (e.g., on_run and on_eval).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableInstructorRun">Disable Instructor Run</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableInstructorRun" data-bind="checked: assignment.settings.disableInstructorRun">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the instructor on_run will not automatically run the students' code. This still runs the students' code.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableStudentRun">Disable Student Run</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableStudentRun" data-bind="checked: assignment.settings.disableStudentRun">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the run button no longer run the students' code. This still runs the instructor's feedback on_run script.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableTifa">Disable Tifa</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableTifa" data-bind="checked: assignment.settings.disableTifa">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then do not automatically run Tifa (which can be slow).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableTrace">Disable Trace</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableTrace" data-bind="checked: assignment.settings.disableTrace">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the students code will not have its execution traced (no variables recorded, no coverage tracked).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-disableEdit">Disable Edit</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-disableEdit" data-bind="checked: assignment.settings.disableEdit">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the students' file will not be editable.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-enableImages">Can Image</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-enableImages" data-bind="checked: assignment.settings.enableImages">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then users can copy/paste images directly into the text editor.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-enableBlocks">Can Blocks</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-enableBlocks" data-bind="checked: assignment.settings.enableBlocks">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the student can edit the block interface (if not, then it is visible but not editable).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-canClose">Can Close</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-canClose" data-bind="checked: assignment.settings.canClose">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the student should mark their submission closed when they are done. There is no way to force a student to do so. Unlike Reviewed, this still submits the correctness.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-onlyInteractive">Only Interactive</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-onlyInteractive" data-bind="checked: assignment.settings.onlyInteractive">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, the editors are hidden, the program is automatically run, and then the console enters Eval mode (interactive).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-onlyUploads">Only Uploads</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-onlyUploads" data-bind="checked: assignment.settings.onlyUploads">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the students' file will not be directly editable (they will have to upload submissions).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideSubmission">Hide Submission</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideSubmission" data-bind="checked: assignment.settings.hideSubmission">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then students will not be able to see their submission's code or history on Canvas.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideFiles">Hide Files</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideFiles" data-bind="checked: assignment.settings.hideFiles">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then students will not see the View Files toolbar.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideQueuedInputs">Hide Queued Inputs</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideQueuedInputs" data-bind="checked: assignment.settings.hideQueuedInputs">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the students cannot access the queued inputs box (makes repeated debugging easier for the input function).
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideEditors">Hide Editors</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideEditors" data-bind="checked: assignment.settings.hideEditors">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then all of the editors are hidden.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideMiddlePanel">Hide Middle Panel</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideMiddlePanel" data-bind="checked: assignment.settings.hideMiddlePanel">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the console and feedback areas is hidden.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideAll">Hide All</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideAll" data-bind="checked: assignment.settings.hideAll">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        INCOMPLETE: If checked, then the entire interface is hidden.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideEvaluate">Hide Evaluate</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideEvaluate" data-bind="checked: assignment.settings.hideEvaluate">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then the Evaluate button is not shown on the console.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideImportDatasetsButton">Hide Import Datasets Button</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideImportDatasetsButton" data-bind="checked: assignment.settings.hideImportDatasetsButton">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then students cannot see the import datasets button.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideImportStatements">Hide Import Statements</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideImportStatements" data-bind="checked: assignment.settings.hideImportStatements">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        INCOMPLETE: If checked, certain kinds of import statements (matplotlib, turtle, datasets) are not shown in the block interface.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-hideCoverageButton">Hide Coverage Button</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-hideCoverageButton" data-bind="checked: assignment.settings.hideCoverageButton">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        INCOMPLETE: If checked, the coverage button is not shown.
+                    </small>
+                </div>
+            </div>
+            
+    
+    
+            <div class="form-group row">
+                <div class="col-sm-2 text-right">
+                    <label class="form-check-label" for="blockpy-settings-saveTurtleOutput">Save Turtle Output</label>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="blockpy-settings-saveTurtleOutput" data-bind="checked: assignment.settings.saveTurtleOutput">
+                    </div>  
+                </div>            
+                <div class="col-sm-9">
+                    <small class="form-text text-muted">
+                        If checked, then turtle output is saved whenever the program uses it.
+                    </small>
+                </div>
+            </div>
+            
+        </form>
+        
+        </div>
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Tags'" style="display: none;">
+        <div>
+        
+    Create new
+    Import by name
+    Find by owner/course/kind
+    
+    Tags:
+        Data:
+            Name
+            Kind
+            Level
+            Version
+            Description
+        Controls:
+            Edit
+            Remove
+            Delete 
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Markdown'" style="display: none;">
+        <div>
+        
+        <textarea class="blockpy-editor-markdown" style="display: none;"></textarea><div class="editor-toolbar"><button class="bold" type="button" title="Bold (Ctrl-B)" tabindex="-1"><i class="fa fa-bold"></i></button><button class="italic" type="button" title="Italic (Ctrl-I)" tabindex="-1"><i class="fa fa-italic"></i></button><button class="heading" type="button" title="Heading (Ctrl-H)" tabindex="-1"><i class="fa fa-header fa-heading"></i></button><i class="separator">|</i><button class="quote" type="button" title="Quote (Ctrl-')" tabindex="-1"><i class="fa fa-quote-left"></i></button><button class="unordered-list" type="button" title="Generic List (Ctrl-L)" tabindex="-1"><i class="fa fa-list-ul"></i></button><button class="ordered-list" type="button" title="Numbered List (Ctrl-Alt-L)" tabindex="-1"><i class="fa fa-list-ol"></i></button><i class="separator">|</i><button class="link" type="button" title="Create Link (Ctrl-K)" tabindex="-1"><i class="fa fa-link"></i></button><button class="image" type="button" title="Insert Image (Ctrl-Alt-I)" tabindex="-1"><i class="fa fa-image"></i></button><i class="separator">|</i><button class="preview no-disable" type="button" title="Toggle Preview (Ctrl-P)" tabindex="-1"><i class="fa fa-eye"></i></button><i class="separator">|</i><button class="guide no-disable" type="button" title="Markdown Guide" tabindex="-1"><i class="fa fa-question-circle"></i></button></div><div class="CodeMirror cm-s-easymde CodeMirror-wrap"><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1" style="min-height: 500px;"><div class="CodeMirror-sizer" style="margin-left: 0px;"><div style="position: relative;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"></div><div class="CodeMirror-code" role="presentation" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" tabindex="0"></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-preview-side editor-preview"></div><div class="editor-statusbar"><span class="autosave"></span><span class="lines">1</span><span class="words">0</span><span class="cursor">0:0</span></div>    
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Sample Submissions'" style="display: none;">
+        <div>
+        
+    <div>
+        <div data-bind="foreach: {data: assignment.sampleSubmissions}" class="row"></div>
+    </div>
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'JSON'" style="display: none;">
+        <div>
+        
+        <div>
+            <textarea class="blockpy-editor-json" style="display: none;"></textarea><div class="CodeMirror cm-s-default"><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-width: 3px;"><div style="position: relative;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>&ZeroWidthSpace;</span>x</span></div><div class="CodeMirror-measure"><pre class="CodeMirror-line" role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"></div><div class="CodeMirror-code" role="presentation" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" tabindex="0"></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 1px;"></div></div></div></div>
+        </div>
+    
+        </div>
+    </div>
+    
+    
+    <div class="col-md-12 blockpy-panel blockpy-editor" data-bind="visible: ui.editors.view().name === 'Toolbox'" style="display: none;">
+        <div>
+        
+        <div>
+            <div class="col-md-12" role="toolbar" aria-label="Toolbox Toolbar">
+                 <div class="btn-group mr-2" role="group" aria-label="Save Group">         
+                    <button type="button" class="btn btn-outline-secondary btn-editor-json-save">
+                        <span class="fas fa-save"></span> Save
+                     </button>
+                 </div>
+             </div>
+            <textarea class="blockpy-editor-toolbox" style="display: none;"></textarea><div class="CodeMirror cm-s-default"><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true"><div style="min-width: 1px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true"><div style="height: 100%; min-height: 1px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; min-width: 3px;"><div style="position: relative;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>&ZeroWidthSpace;</span>x</span></div><div class="CodeMirror-measure"><pre class="CodeMirror-line" role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"></div><div class="CodeMirror-code" role="presentation" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="true" tabindex="0"></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters"><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 1px;"></div></div></div></div>
+        </div>
+    
+        </div>
+    </div>
+    
+        </div>
+    
+        <div class="row">
+            
+    <div class="col-md-12 blockpy-panel blockpy-status">
+        <div>
+            <label class="badge server-status-ready" data-bind="class: ui.server.status('loadAssignment')">Load Assignment
+                <!-- ko if: display.instructor --><!-- /ko -->
+            </label>, 
+            <span class="badge server-status-ready" data-bind="class: ui.server.status('saveAssignment')">Save Assignment</span>, 
+            <span class="badge server-status-ready" data-bind="class: ui.server.status('loadFile')">Load File</span>, 
+            <span class="badge server-status-offline" data-bind="class: ui.server.status('saveFile')">Save File</span>, 
+            <span class="badge server-status-ready" data-bind="class: ui.server.status('loadDataset')">Load Dataset</span>, 
+            <span class="badge server-status-offline" data-bind="class: ui.server.status('logEvent')">Log Event</span>, 
+            <span class="badge server-status-ready" data-bind="class: ui.server.status('updateSubmission'),
+                                            click: ui.server.force.updateSubmission">Update Submission</span>, 
+            <span class="badge server-status-ready" data-bind="class: ui.server.status('onExecution')">Execution</span>
+        </div>
+        <div <span="" data-bind="text: ui.server.messages">Ready</div>
+        <div>
+            <span>User: <span data-bind="text: user.id"></span> (<span data-bind="text: user.name"></span>, <span data-bind="text: user.role">anonymous</span>)</span>, 
+            <span>Course: <span data-bind="text: user.courseId"></span></span>,
+            <span>Group: <span data-bind="text: user.groupId"></span></span>,
+            <span>Assignment: <span data-bind="text: assignment.id"></span></span>,
+            <span>Assignment Version: <span data-bind="text: assignment.version"></span></span>,
+            <span>Submission: 
+                <span data-bind="text: submission.id"></span>
+                <span data-bind="if: submission.ownerId() != user.id()"></span>
+            </span>, 
+            <span>Submission Version: <span data-bind="text: submission.version">0</span></span>,
+            <span>Editor Version: <span data-bind="text: display.editorVersion">5.1.1</span></span>
+        </div>
+    </div>
+    
+        </div><div class="row">
+        
+            <!-- Console -->
+            
+        <div class="blockpy-panel blockpy-console col-md-6" role="region" aria-label="Console" data-bind="class: ui.console.size">
+              
+            <!-- Feedback/Trace Visibility Control -->
+            <button type="button" class="btn btn-sm btn-outline-secondary float-right blockpy-show-feedback" data-bind="hidden: ui.secondRow.isConsoleShowVisible, click: ui.secondRow.advanceState" style="display: none;">
+                <span class="fas fa-eye"></span>
+            </button>
+              
+            <strong>Console:</strong>
+            
+            <div class="blockpy-printer blockpy-printer-default" style="height: 200px;"><div class="blockpy-printer-output" data-container="[object HTMLDivElement]" data-toggle="tooltip" data-placement="auto" data-step="3" title="" data-original-title="Step 3, Line 7"><div><samp>Enter your name : </samp><br><div class="blockpy-console-input"><input type="text" class="" disabled=""><button disabled="">Enter</button></div></div></div><div class="blockpy-printer-output" data-container="[object HTMLDivElement]" data-toggle="tooltip" data-placement="auto" data-step="8" title="" data-original-title="Step 8, Line 8"><samp>['John', 'Doe']</samp></div><div class="blockpy-printer-output" data-container="[object HTMLDivElement]" data-toggle="tooltip" data-placement="auto" data-step="9" title="Step 9, Line 8"><button type="button" class="btn btn-sm btn-outline float-right blockpy-btn-eval">
+        Evaluate
+    </button></div></div>
+            
+         </div>
+             
+            <!-- Feedback -->
+            <!-- ko if: ui.secondRow.isFeedbackVisible -->
+            
+    
+    <span class="blockpy-floating-feedback text-muted-less pull-right position-sticky sticky-top" aria-hidden="true" role="presentation" aria-label="New Feedback Alert">
+        New feedback ↑
+    </span>
+    
+    <div class="blockpy-feedback col-md-6 blockpy-panel" role="region" aria-label="Feedback" aria-live="polite">
+    
+        <!-- Feedback/Trace Visibility Control -->
+        <button type="button" class="btn btn-sm btn-outline-secondary float-right" data-bind="click: ui.secondRow.advanceState">
+            <span class="fas fa-eye"></span>
+            <span data-bind="text: ui.secondRow.switchLabel">View Trace</span>
+        </button>
+        
+        <!-- Positive Feedback Region -->
+        <div class="blockpy-feedback-positive float-right">
+            
+        
+        </div>
+    
+        <!-- Actual Feedback Region -->    
+        <div>
+            <strong>Feedback: </strong>
+            <span class="badge blockpy-feedback-category feedback-badge label-problem-complete" data-bind="css: ui.feedback.badge,
+                           text: ui.feedback.category">Complete</span>
+            <small data-bind="text: (100*submission.score())+'%',
+                              visible: display.instructor() &amp;&amp; execution.feedback.label()" class="text-muted" style="display: none;">100%</small>
+        </div>
+        <div>
+            <strong class="blockpy-feedback-label" data-bind="text: execution.feedback.label">Complete</strong>
+            <div class="blockpy-feedback-message" data-bind="html: execution.feedback.message"><p>Great work!</p>
+    </div>
+        </div>
+    </div>            
+    
+            <!-- /ko -->
+            
+            <!-- Trace -->
+            <!-- ko if: ui.secondRow.isTraceVisible --><!-- /ko -->
+             
+        </div><!-- Row 5: Footer Row -->    
+        
+        
+    </div><div class="blocklyWidgetDiv"></div><div class="blocklyDropDownDiv" style="opacity: 0; transition: transform 0.25s ease 0s, opacity 0.25s ease 0s;"><div class="blocklyDropDownContent"></div><div class="blocklyDropDownArrow"></div></div><div class="blocklyTooltipDiv"></div></div>
+    
+        <script>
+            $(document).ready(function () {
+                editor = new blockpy.BlockPy({
+                    // Configuration constants
+                    'blockly.path': "/blockpy/static/blockly/media/",
+                    'attachment.point': document.getElementById('blockpy-div'),
+                    "urls": {
+                        "importDatasets": "https://corgis-edu.github.io/corgis/datasets/",
+                        'loadAssignment': "/blockpy/blockpy/load_assignment",
+                        
+                    },
+                    // User information
+                    "user.id": null,
+                    
+                    "user.role": "anonymous",
+                    "user.course_id": null,
+                    // Group Information
+                    
+    
+                    
+    
+                    
+    
+                    
+                });
+    
+                
+    
+                
+    
+                
+    
+                
+                    function fixCanvasSize() {
+                        window.parent.postMessage(JSON.stringify({
+                            subject: "lti.frameResize",
+                            "height": $("body").height()+50
+                        }), '*')
+                    }
+                    try {
+                        fixCanvasSize();
+                        var resizeId;
+                        var ro = new ResizeObserver(entries => {
+                            for (let entry of entries) {
+                                if (entry.target === document.body) {
+                                    clearTimeout(resizeId);
+                                    resizeId = setTimeout(fixCanvasSize, 500);
+                                }
+                            /*const cr = entry.contentRect;
+                            console.log('Element:', entry.target);
+                            console.log(`Element size: ${cr.width}px x ${cr.height}px`);
+                            console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);*/
+                            }
+                        });
+    
+                        // Observe one or multiple elements
+                        ro.observe(document.body);
+    
+                    } catch(e) {
+                        console.error(e);
+                    }
+                
+    
+                $('.delete-on-load').remove();
+            });
+        </script>
+    
+    
+    </div>
+    
+    
+    <!-- begin footer -->
+    <hr>
+    <footer class="footer" style="margin-top:20px;">
+        <div class="container-fluid">
+            <p class="pull-right">
+                
+                    <span>Not logged in</span> | <a href="#">Back to top</a>
+                
+            </p>
+            <p>
+                <small>
+                    © Copyright 2019 <a href="https://acbart.com">Austin Cory Bart</a>, Luke Gusukuma, Dennis Kafura.
+                </small>
+            </p>
+        </div>
+    </footer>
+    <!-- end footer -->
+    
+    
+    
+    
+    <canvas class="blocklyComputeCanvas"></canvas></body><loom-container id="lo-engage-ext-container"><loom-shadow classname="resolved"></loom-shadow></loom-container></html>

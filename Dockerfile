@@ -8,31 +8,26 @@ RUN mkdir pedal-edu
 
 WORKDIR /usr/src/app/blockpy-edu/
 
-# Skulpt 
 RUN git clone https://github.com/blockpy-edu/skulpt skulpt
 
-# blockly and codemirror
+WORKDIR /usr/src/app/blockpy-edu/skulpt/
+
+RUN npm install
+RUN npm run devbuild
+
+WORKDIR /usr/src/app/blockpy-edu/
 RUN git clone https://github.com/blockpy-edu/BlockMirror BlockMirror
 RUN git clone https://github.com/google/blockly blockly
-
-
-# Pedal
 WORKDIR /usr/src/app/pedal-edu/
-
 RUN git clone https://github.com/pedal-edu/pedal pedal
 RUN git clone https://github.com/pedal-edu/curriculum-ctvt curriculum-ctvt
 RUN git clone https://github.com/pedal-edu/curriculum-sneks curriculum-sneks
 
-# Blockpy
 WORKDIR /usr/src/app/blockpy-edu/
+
+
 RUN git clone https://github.com/blockpy-edu/blockpy blockpy
 
-# Skulpt 
-WORKDIR /usr/src/app/blockpy-edu/skulpt/
-RUN npm install
-RUN npm run devbuild
-
-# Blockpy
 WORKDIR /usr/src/app/blockpy-edu/blockpy/
 RUN npm install
 RUN npm run dev
